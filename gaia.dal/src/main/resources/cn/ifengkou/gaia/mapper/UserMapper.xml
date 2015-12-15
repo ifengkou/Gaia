@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ifengkou.gaia.dao.UserDao">
+
+        <select id="get" resultType="java.util.Map" parameterType="Object">
+                select *
+                from USER
+                where id = #{id}
+        </select>
+</mapper>
