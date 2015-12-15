@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="gaia.dal:war">
+    <output-path>$PROJECT_DIR$/gaia.dal/target</output-path>
+    <root id="archive" name="gaia.dal-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="gaia.dal:war exploded" />
+    </root>
+  </artifact>
+</component>

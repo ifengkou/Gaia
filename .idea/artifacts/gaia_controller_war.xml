@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="gaia.controller:war">
+    <output-path>$PROJECT_DIR$/gaia.controller/target</output-path>
+    <root id="archive" name="gaia.controller-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="gaia.controller:war exploded" />
+    </root>
+  </artifact>
+</component>

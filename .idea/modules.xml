@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Gaia.iml" filepath="$PROJECT_DIR$/Gaia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gaia.common/gaia.common.iml" filepath="$PROJECT_DIR$/gaia.common/gaia.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gaia.controller/gaia.controller.iml" filepath="$PROJECT_DIR$/gaia.controller/gaia.controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gaia.dal/gaia.dal.iml" filepath="$PROJECT_DIR$/gaia.dal/gaia.dal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gaia.service/gaia.service.iml" filepath="$PROJECT_DIR$/gaia.service/gaia.service.iml" />
+    </modules>
+  </component>
+</project>
