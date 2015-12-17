@@ -18,4 +18,5 @@ public interface ProjectDao {
     int update(Project bean);
     int delete(String id);
 
+    Project getByName(String name);
 }

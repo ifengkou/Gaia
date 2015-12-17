@@ -5,7 +5,7 @@ package cn.ifengkou.gaia.model;
  */
 public class Project {
     private String projectID;
-    private String contractID;
+
     private String projectAddr;
     private String projectName;
     private String buildUnit;
@@ -14,7 +14,19 @@ public class Project {
     private String tel;
     private String remark;
 
+    private String contractID;
+    private String contractName;//用于新增项目时
+
+
     private Contract contract;
+
+    public String getContractName() {
+        return contractName;
+    }
+
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
+    }
 
     public Contract getContract() {
         return contract;

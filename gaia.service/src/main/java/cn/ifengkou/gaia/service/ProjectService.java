@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface ProjectService {
     Project get(String id);
+    Project getByName(String name);
     List<Project> getList(String customerID);
 
     int add(Project bean);

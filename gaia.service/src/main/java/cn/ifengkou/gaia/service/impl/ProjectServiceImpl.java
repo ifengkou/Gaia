@@ -26,12 +26,19 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public Project getByName(String name) {
+        return projectDao.getByName(name);
+    }
+
+    @Override
     public List<Project> getList(String customerID) {
         return projectDao.getList(customerID);
     }
 
     @Override
     public int add(Project bean) {
+
+
         return projectDao.add(bean);
     }
 

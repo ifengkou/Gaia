@@ -29,6 +29,12 @@
                 from Project
                 where ProjectID = #{id}
         </select>
+
+        <select id="getByName" resultType="cn.ifengkou.gaia.model.Project" parameterType="Object">
+                select ProjectID,ProjectName,ProjectAddr,linkMan,Tel,ContractID
+                from Project
+                where ProjectName = #{name}
+        </select>
         <select id="getList" resultMap="ResultMap" parameterType="Object">
                 select p.ProjectID,p.ContractID,p.ProjectAddr,p.ProjectName,p.BuildUnit,p.ConstructUnit,p.LinkMan,p.Tel,p.Remark
                 ,c.CustomerID,c.ContractID c_ContractID,c.ContractNo,c.ContractName
