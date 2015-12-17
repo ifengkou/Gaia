@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ifengkou.gaia.dao.CustomerPlanDao">
+
+        <select id="getAuditingPlansByCustomerID" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
+                select customerPlanID,contractID,constructUnit,projectID,projectName,projectAddr
+                ,consPos,conStrength,slump,castMode,planCube,needDate,planDate,linkMan,tel,auditStatus
+                from CustomerPlan
+                where CustomerID = #{customerID} and auditStatus=0
+        </select>
+
+        <select id="getAuditedPlansByCustomerID" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
+                select customerPlanID,contractID,constructUnit,projectID,projectName,projectAddr
+                ,consPos,conStrength,slump,castMode,planCube,needDate,planDate,linkMan,tel,auditStatus
+                from CustomerPlan
+                where CustomerID = #{customerID} and auditStatus=1
+        </select>
+
+        <select id="getPlansByProjectID" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
+                select customerPlanID,contractID,constructUnit,projectID,projectName,projectAddr
+                ,consPos,conStrength,slump,castMode,planCube,needDate,planDate,linkMan,tel,auditStatus
+                from CustomerPlan
+                where CustomerID = #{customerID} and projectID=#{projectID}
+        </select>
+
+        <insert id="add" parameterType="cn.ifengkou.gaia.model.CustomerPlan">
+                insert INTO CustomerPlan(customerPlanID,contractID,constructUnit,projectID,projectName,projectAddr
+                ,consPos,conStrength,slump,castMode,planCube,needDate,planDate,linkMan,tel,auditStatus,Lifecycle)
+                VALUES(#{customerPlanID},#{contractID},#{constructUnit},#{projectID},#{projectName},#{projectAddr}
+                ,#{consPos},#{conStrength},#{slump},#{castMode},#{planCube},#{needDate},#{planDate},#{linkMan},#{tel},0,0)
+        </insert>
+
+        <update id="update" parameterType="cn.ifengkou.gaia.model.CustomerPlan">
+                UPDATE CustomerPlan set consPos =#{consPos},conStrength =#{conStrength},slump =#{slump},castMode =#{castMode}
+                ,planCube =#{planCube},needDate =#{needDate},planDate =#{planDate},linkMan =#{linkMan},tel =#{tel}
+                where customerPlanID =#{customerPlanID}
+        </update>
+
+        <delete id="delete" parameterType="Object">
+                delete from CustomerPlan
+                where customerPlanID =#{id}
+        </delete>
+</mapper>
