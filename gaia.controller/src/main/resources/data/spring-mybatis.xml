@@ -20,13 +20,13 @@ http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
                 <value>classpath:cn/ifengkou/gaia/mapper/*.xml</value>
             </list>
         </property>
-
+        <!--sqlserver-->
         <property name="plugins">
             <array>
                 <bean class="com.github.pagehelper.PageHelper">
                     <property name="properties">
                         <value>
-                            dialect=mysql
+                            dialect=sqlserver
                         </value>
                     </property>
                 </bean>

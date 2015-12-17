@@ -6,7 +6,23 @@
 
         <select id="get" resultType="java.util.Map" parameterType="Object">
                 select *
-                from USER
-                where id = #{id}
+                from USERS
+                where UserId = #{id}
         </select>
+
+        <select id="getByName" resultType="java.util.Map" parameterType="Object">
+                select UserID,Password,TrueName,UserType,Token
+                from USERS
+                where UserId = #{name}
+        </select>
+
+        <select id="getUserByAccessToken" resultType="java.util.List" parameterType="String">
+                select UserID,TrueName,DepartmentID,UserType,Token
+                from USERS
+                where Token = #{accesstoken}
+        </select>
+
+        <update id="genUserToken" parameterType="java.util.Map">
+                UPDATE Users set Token =#{token} where UserID =#{name}
+        </update>
 </mapper>

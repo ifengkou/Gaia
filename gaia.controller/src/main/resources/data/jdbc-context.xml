@@ -13,32 +13,41 @@
     <!-- production环境 -->
     <!--<beans profile="production">-->
     <beans>
-        <context:property-placeholder location="classpath*:/data/config.properties" ignore-unresolvable="true"/>
+        <context:property-placeholder location="classpath*:/data/sqlserver.properties" ignore-unresolvable="true"/>
         <!--<tx:annotation-driven transaction-manager="transactionManager" />-->
 
         <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
-            <!--<property name="driverClassName" value="${doris_jdbc.driverClassName}"/>-->
-            <property name="url" value="${doris_jdbc.url}"/>
-            <property name="username" value="${doris_jdbc.username}"/>
-            <property name="password" value="${doris_jdbc.password}"/>
 
-            <property name="initialSize" value="${doris_jdbc.initialSize}"/>
-            <property name="minIdle" value="${doris_jdbc.minIdle}"/>
-            <property name="maxActive" value="${doris_jdbc.maxActive}"/>
+            <!-- 基本属性 url、user、password -->
+            <property name="driverClassName" value="${gaia_jdbc.driverClassName}"/>
+            <property name="dbType" value = "sqlserver" />
+            <property name="url" value="${gaia_jdbc.url}"/>
+            <property name="username" value="${gaia_jdbc.username}"/>
+            <property name="password" value="${gaia_jdbc.password}"/>
 
-            <property name="timeBetweenEvictionRunsMillis" value="${doris_jdbc.timeBetweenEvictionRunsMillis}"/>
-            <property name="minEvictableIdleTimeMillis" value="${doris_jdbc.minEvictableIdleTimeMillis}"/>
+            <!-- 配置初始化大小、最小、最大 -->
+            <property name="initialSize" value="${gaia_jdbc.initialSize}"/>
+            <property name="minIdle" value="${gaia_jdbc.minIdle}"/>
+            <property name="maxActive" value="${gaia_jdbc.maxActive}"/>
 
-            <property name="validationQuery" value="${doris_jdbc.validationQuery}"/>
-            <property name="testWhileIdle" value="${doris_jdbc.testWhileIdle}"/>
-            <property name="testOnBorrow" value="${doris_jdbc.testOnBorrow}"/>
-            <property name="testOnReturn" value="${doris_jdbc.testOnReturn}"/>
-            <property name="maxOpenPreparedStatements" value="${doris_jdbc.maxOpenPreparedStatements}"/>
-            <property name="removeAbandoned" value="${doris_jdbc.removeAbandoned}"/>
-            <property name="removeAbandonedTimeout" value="${doris_jdbc.removeAbandonedTimeout}"/>
-            <property name="logAbandoned" value="${doris_jdbc.logAbandoned}"/>
+            <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+            <property name="timeBetweenEvictionRunsMillis" value="${gaia_jdbc.timeBetweenEvictionRunsMillis}"/>
+            <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+            <property name="minEvictableIdleTimeMillis" value="${gaia_jdbc.minEvictableIdleTimeMillis}"/>
 
-            <property name="filters" value="${doris_jdbc.filtes}"/>
+            <property name="validationQuery" value="${gaia_jdbc.validationQuery}"/>
+            <property name="testWhileIdle" value="${gaia_jdbc.testWhileIdle}"/>
+            <property name="testOnBorrow" value="${gaia_jdbc.testOnBorrow}"/>
+            <property name="testOnReturn" value="${gaia_jdbc.testOnReturn}"/>
+            <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+            <property name="poolPreparedStatements" value="true" />
+            <property name="maxOpenPreparedStatements" value="${gaia_jdbc.maxOpenPreparedStatements}"/>
+
+            <property name="removeAbandoned" value="${gaia_jdbc.removeAbandoned}"/>
+            <property name="removeAbandonedTimeout" value="${gaia_jdbc.removeAbandonedTimeout}"/>
+            <property name="logAbandoned" value="${gaia_jdbc.logAbandoned}"/>
+            <!-- 配置监控统计拦截的filters -->
+            <property name="filters" value="${gaia_jdbc.filtes}"/>
         </bean>
     </beans>
 

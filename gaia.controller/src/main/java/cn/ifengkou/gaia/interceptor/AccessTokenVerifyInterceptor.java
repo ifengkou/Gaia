@@ -1,14 +1,18 @@
 package cn.ifengkou.gaia.interceptor;
 
+import cn.ifengkou.commons.StringUtils;
+import cn.ifengkou.gaia.common._Sys;
 import cn.ifengkou.gaia.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 
 /**
  * 验证token有效性
@@ -26,22 +30,22 @@ public class AccessTokenVerifyInterceptor extends HandlerInterceptorAdapter {
             throws Exception {
         LOG.info("AccessTokenVerifyInterceptor executing.......");
         boolean flag = false;
-        /*String accessToken = request.getParameter("accesstoken");
+        String accessToken = request.getParameter("accesstoken");
         if(StringUtils.notEmpty(accessToken)) {
             //验证accessToken
             //verifyAccessToken 已做缓存处理
-            User user = userService.verifyAccessToken(accessToken);
+            HashMap<String,Object> user = userService.verifyAccessToken(accessToken);
             if(user!=null){
                 flag = true;
                 //塞到request中去，供controller里面调用
-                request.setAttribute(_SystemConstants.SESSION_NAME_USER,user);
+                request.setAttribute(_Sys.USER_KEY,user);
             }
         }
 
         if(!flag){
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.getWriter().print("wrong access token");
-        }*/
+        }
         return flag;
     }
 }
