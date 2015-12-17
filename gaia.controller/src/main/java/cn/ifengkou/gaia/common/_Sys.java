@@ -5,4 +5,5 @@ package cn.ifengkou.gaia.common;
  */
 public class _Sys {
     public static final String USER_KEY = "ZES_USER";
+    public static final String ADMIN_KEY = "ZES_ADMIN";
 }

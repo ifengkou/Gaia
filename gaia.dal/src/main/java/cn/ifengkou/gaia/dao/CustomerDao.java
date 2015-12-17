@@ -6,12 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Sloong on 2015/12/15.
+ * Created by Sloong on 2015/12/17.
  */
 @Repository
-public interface UserDao {
+public interface CustomerDao {
     HashMap<String,Object> get(String id);
-
     HashMap<String,Object> getByName(String name);
 
     List<HashMap<String,Object>> getByAccessToken(String accessToken);

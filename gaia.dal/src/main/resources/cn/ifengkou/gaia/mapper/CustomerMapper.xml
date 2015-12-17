@@ -2,27 +2,27 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.ifengkou.gaia.dao.UserDao">
+<mapper namespace="cn.ifengkou.gaia.dao.CustomerDao">
 
         <select id="get" resultType="java.util.Map" parameterType="Object">
                 select *
                 from USERS
-                where UserId = #{id} and Lifecycle >-1
+                where CustomerID = #{id} and Lifecycle >-1
         </select>
 
         <select id="getByName" resultType="java.util.Map" parameterType="Object">
-                select UserID,Password,TrueName,UserType,Token
-                from USERS
-                where UserId = #{name} and Lifecycle >-1
+                select CustomerID,Password,CustName,ShortName,CustType,Token
+                from Customer
+                where LoginName = #{name} and Lifecycle >-1
         </select>
 
         <select id="getByAccessToken" resultType="java.util.List" parameterType="String">
-                select UserID as id ,TrueName as username,UserType as usertype
-                from USERS
+                select CustomerID as id,CustName as username,CustType as usertype
+                from Customer
                 where Token = #{accesstoken} and Lifecycle >-1
         </select>
 
         <update id="genToken" parameterType="java.util.Map">
-                UPDATE Users set Token =#{token} where UserID =#{name}
+                UPDATE Customer set Token =#{token} where CustomerID =#{name}
         </update>
 </mapper>

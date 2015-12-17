@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
     @Cacheable(value = "accessTokenUser",key = "#accessToken")
     @Override
     public HashMap<String,Object> verifyAccessToken(String accessToken) {
-        LOG.info("verifyAccessToken executing......");
-        List<HashMap<String,Object>> users = userDao.getUserByAccessToken(accessToken);
+        LOG.info("user token check:{}",accessToken);
+        List<HashMap<String,Object>> users = userDao.getByAccessToken(accessToken);
         if(users.size()!=1){
             if(users.size()>1){
                 LOG.error("accessToken 出现了重复，bug！请检查！");
@@ -50,6 +50,6 @@ public class UserServiceImpl implements UserService {
         HashMap<String,String> map = new HashMap<>();
         map.put("name",name);
         map.put("token",token);
-        return userDao.genUserToken(map);
+        return userDao.genToken(map);
     }
 }

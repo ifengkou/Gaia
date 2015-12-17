@@ -2,6 +2,7 @@ package cn.ifengkou.gaia.interceptor;
 
 import cn.ifengkou.commons.StringUtils;
 import cn.ifengkou.gaia.common._Sys;
+import cn.ifengkou.gaia.service.CustomerService;
 import cn.ifengkou.gaia.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,9 @@ public class AccessTokenVerifyInterceptor extends HandlerInterceptorAdapter {
     @Resource
     UserService userService;
 
+    @Resource
+    CustomerService customerService;
+
     private final static Logger LOG = LoggerFactory.getLogger(AccessTokenVerifyInterceptor.class);
 
     @Override
@@ -34,11 +38,16 @@ public class AccessTokenVerifyInterceptor extends HandlerInterceptorAdapter {
         if(StringUtils.notEmpty(accessToken)) {
             //验证accessToken
             //verifyAccessToken 已做缓存处理
-            HashMap<String,Object> user = userService.verifyAccessToken(accessToken);
-            if(user!=null){
+            HashMap<String,Object> customer = customerService.verifyAccessToken(accessToken);
+            if(customer!=null){
                 flag = true;
-                //塞到request中去，供controller里面调用
-                request.setAttribute(_Sys.USER_KEY,user);
+                request.setAttribute(_Sys.USER_KEY,customer);
+            }else{
+                HashMap<String,Object> user = userService.verifyAccessToken(accessToken);
+                if(user!=null){
+                    flag = true;
+                    request.setAttribute(_Sys.ADMIN_KEY,user);
+                }
             }
         }
 
