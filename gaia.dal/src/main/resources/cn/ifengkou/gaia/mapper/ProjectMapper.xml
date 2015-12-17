@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ifengkou.gaia.dao.ProjectDao">
+
+        <resultMap id="contractMap" type="cn.ifengkou.gaia.model.Contract">
+                <result column="CustomerID" property="customerID"/>
+                <result column="ContractName" property="contractName"/>
+                <result column="c_ContractID" property="contractID"/>
+                <result column="ContractNo" property="contractNo"/>
+
+        </resultMap>
+
+        <resultMap id="ResultMap" type="cn.ifengkou.gaia.model.Project">
+                <result column="ProjectID" property="projectID"/>
+                <result column="ContractID" property="contractID"/>
+                <result column="ProjectAddr" property="projectAddr"/>
+                <result column="ProjectName" property="projectName"/>
+                <result column="BuildUnit" property="buildUnit"/>
+                <result column="ConstructUnit" property="constructUnit"/>
+                <result column="LinkMan" property="linkMan"/>
+                <result column="Tel" property="tel"/>
+                <result column="Remark" property="remark"/>
+                <association property="contract" javaType="cn.ifengkou.gaia.model.Contract" resultMap="contractMap"/>
+        </resultMap>
+        <select id="get" resultType="cn.ifengkou.gaia.model.Project" parameterType="Object">
+                select ProjectID,ProjectName,ProjectAddr,linkMan,Tel,ContractID
+                from Project
+                where ProjectID = #{id}
+        </select>
+        <select id="getList" resultMap="ResultMap" parameterType="Object">
+                select p.ProjectID,p.ContractID,p.ProjectAddr,p.ProjectName,p.BuildUnit,p.ConstructUnit,p.LinkMan,p.Tel,p.Remark
+                ,c.CustomerID,c.ContractID c_ContractID,c.ContractNo,c.ContractName
+                from Project p,Contract c
+                where p.Lifecycle >-1
+                and p.ContractID = c.ContractID
+                and c.CustomerID = #{customerID}
+                ORDER BY p.BuildTime desc
+        </select>
+
+        <insert id="add" parameterType="cn.ifengkou.gaia.model.Project">
+                insert INTO Project(ProjectID,ProjectName,ProjectAddr,linkMan,Tel,ContractID,Lifecycle)
+                VALUES(#{projectID},#{projectName},#{projectAddr},#{linkMan},#{tel},#{contractID},0)
+        </insert>
+
+        <update id="update" parameterType="cn.ifengkou.gaia.model.Project">
+                UPDATE Project set ProjectName =#{projectName},ProjectAddr =#{projectAddr},LinkMan =#{linkMan},Tel =#{tel}
+                where ProjectID =#{projectID}
+        </update>
+
+        <delete id="delete" parameterType="Object">
+                delete from Project
+                where ProjectID =#{id}
+        </delete>
+</mapper>

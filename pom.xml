@@ -9,10 +9,11 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
+        <module>gaia.common</module>
+        <module>gaia.model</module>
         <module>gaia.dal</module>
         <module>gaia.service</module>
         <module>gaia.controller</module>
-        <module>gaia.common</module>
     </modules>
 
     <properties>

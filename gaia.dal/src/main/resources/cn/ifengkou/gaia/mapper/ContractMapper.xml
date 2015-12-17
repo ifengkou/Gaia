@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ifengkou.gaia.dao.ContractDao">
+
+        <select id="get" resultType="cn.ifengkou.gaia.model.Contract" parameterType="Object">
+                select ProjectID,ProjectName,ProjectAddr,linkMan,Tel,ContractID
+                from Contract
+                where ContractID = #{id}
+        </select>
+
+        <insert id="add" parameterType="cn.ifengkou.gaia.model.Contract">
+                insert INTO Contract(ContractID,ContractName,ContractNo,Lifecycle)
+                VALUES(#{contractID},#{contractName},#{contractNo},0)
+        </insert>
+
+        <update id="update" parameterType="cn.ifengkou.gaia.model.Contract">
+                UPDATE Contract set ContractName =#{contractName},ContractNo =#{contractNo}
+                where ContractID =#{contractID}
+        </update>
+
+        <delete id="delete" parameterType="Object">
+                delete from Contract
+                where ContractID =#{id}
+        </delete>
+</mapper>

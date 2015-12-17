@@ -5,7 +5,7 @@
 <mapper namespace="cn.ifengkou.gaia.dao.UserDao">
 
         <select id="get" resultType="java.util.Map" parameterType="Object">
-                select *
+                select UserID as id ,TrueName as username,UserType as usertype
                 from USERS
                 where UserId = #{id} and Lifecycle >-1
         </select>
@@ -16,7 +16,7 @@
                 where UserId = #{name} and Lifecycle >-1
         </select>
 
-        <select id="getByAccessToken" resultType="java.util.List" parameterType="String">
+        <select id="getByAccessToken" resultType="java.util.Map" parameterType="String">
                 select UserID as id ,TrueName as username,UserType as usertype
                 from USERS
                 where Token = #{accesstoken} and Lifecycle >-1

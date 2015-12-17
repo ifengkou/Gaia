@@ -15,9 +15,8 @@
                 from Customer
                 where LoginName = #{name} and Lifecycle >-1
         </select>
-
-        <select id="getByAccessToken" resultType="java.util.List" parameterType="String">
-                select CustomerID as id,CustName as username,CustType as usertype
+        <select id="getByAccessToken" resultType="java.util.Map" parameterType="String">
+                select CustomerID as id, CustName as username, CustType as usertype
                 from Customer
                 where Token = #{accesstoken} and Lifecycle >-1
         </select>
