@@ -5,6 +5,12 @@
     <display-name>Gaia Server</display-name>
 
     <!-- Spring ApplicationContext配置文件的路径,可使用通配符，用于后面的Spring Context Loader -->
+    <!--<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:/spring/*.xml</param-value>
+    </context-param>-->
+
+    <!-- Spring ApplicationContext配置文件的路径,可使用通配符，用于后面的Spring Context Loader -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
