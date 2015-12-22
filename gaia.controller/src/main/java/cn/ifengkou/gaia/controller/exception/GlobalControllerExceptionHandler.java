@@ -1,6 +1,5 @@
-package cn.ifengkou.gaia.exception;
+package cn.ifengkou.gaia.controller.exception;
 
-import cn.ifengkou.gaia.common.JsonDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,7 +18,7 @@ public class GlobalControllerExceptionHandler {
     @ResponseBody
     public String handleIOException(NullPointerException ex) {
         //String className = ClassUtils.getShortName(ex.getClass());
-        return  "NullPointException";
+        return  "there is a null pointer exception";
     }
 
     /*@ExceptionHandler(AccessForbidException.class)
@@ -29,10 +28,19 @@ public class GlobalControllerExceptionHandler {
         return "access token is invalidation";
     }*/
 
+    @ExceptionHandler(ResourceIsNotExistException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public String handleResourceIsNotExistException(ResourceIsNotExistException ex){
+        //return new JsonDto(false,ex.getMessage());
+        return ex.getMessage();
+    }
+
     @ExceptionHandler(IllegalException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public JsonDto handleIllegalException(IllegalException ex){
-        return new JsonDto(false,ex.getMessage());
+    public String handleIllegalException(IllegalException ex){
+        //return new JsonDto(false,ex.getMessage());
+        return ex.getMessage();
     }
 }
