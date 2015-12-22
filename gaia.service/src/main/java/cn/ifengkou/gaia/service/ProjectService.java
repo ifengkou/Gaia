@@ -15,4 +15,6 @@ public interface ProjectService {
     int add(Project bean);
     int update(Project bean);
     int delete(String id);
+
+    int deleteContractAndProject(String contractId,String projectId);
 }

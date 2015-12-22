@@ -51,4 +51,11 @@ public class ProjectServiceImpl implements ProjectService {
     public int delete(String id) {
         return projectDao.delete(id);
     }
+
+    @Override
+    public int deleteContractAndProject(String cid,String pid){
+        projectDao.delete(pid);
+        int i = contractDao.delete(cid);
+        return i;
+    }
 }

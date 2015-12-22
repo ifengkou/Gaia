@@ -4,12 +4,9 @@ import cn.ifengkou.commons.DecriptTools;
 import cn.ifengkou.commons.StringUtils;
 import cn.ifengkou.commons.UUIDTools;
 import cn.ifengkou.gaia.common.JsonDto;
-import cn.ifengkou.gaia.exception.IllegalException;
+import cn.ifengkou.gaia.model.LoginData;
 import cn.ifengkou.gaia.service.CustomerService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -24,41 +21,45 @@ public class CustomerController {
     @Resource
     CustomerService customerService;
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST,consumes = "application/json")
     @ResponseBody
-    public JsonDto userLogin(String name,String pass){
+    public JsonDto userLogin(@RequestBody LoginData data){
+        String name = data.getName();
+        String pass = data.getPass();
         HashMap<String,Object> user = customerService.getByName(name);
         if(user!=null){
-            String password = (String)user.get("Password");
-            //TODO passºóÌ¨¼ÓÃÜ ·½±ã²âÊÔ
+            String password = (String)user.get("password");
+            //TODO pass å‰ç«¯å¤„ç†åŠ å¯†
             pass = DecriptTools.SHA1(pass).toUpperCase();
 
             if(StringUtils.notEmpty(password)&&password.equals(pass)){
-                user.remove("Password");
+                user.remove("password");
 
-                //Èç¹ûÓÃ»§tokenÎª¿Õ
-                String token = (String)user.get("Token");
+                //å¦‚æœæ²¡æœ‰tokenï¼Œé‚£ä¹ˆè¿™æ—¶å€™ç”Ÿæˆ
+                String token = (String)user.get("token");
                 if(StringUtils.isEmpty(token)){
                     token = UUIDTools.uuid();
 
                     customerService.genToken(name, token);
 
-                    user.put("Token",token);
+                    user.put("token",token);
                 }
 
                 return new JsonDto(true,user);
             }
-            return new JsonDto(false,"ÓÃ»§Ãû»òÃÜÂë´íÎó");
+            return new JsonDto(false,"ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯");
         }
-        return new JsonDto(false,"ÓÃ»§²»´æÔÚ");
+        return new JsonDto(false,"ç”¨æˆ·ä¸å­˜åœ¨ï¼Œè¯·é‡è¯•æˆ–è”ç³»ç®¡ç†å‘˜");
     }
 
     @RequestMapping(method= RequestMethod.GET,value = "/accesstoken")
     @ResponseBody
-    public String verifyAccessToken(String accessToken) throws IllegalException{
-        HashMap<String,Object> user = customerService.verifyAccessToken(accessToken);
-        if(user==null) throw new IllegalException("validation fails");
-        return (String)user.get("id");
+    public JsonDto verifyAccessToken(String token){
+        HashMap<String,Object> user = customerService.verifyAccessToken(token);
+        if(user==null) {
+            return new JsonDto(false,"éªŒè¯å¤±è´¥");
+        }
+        return new JsonDto(true,"éªŒè¯æˆåŠŸ",user.get("id"));
     }
 
 

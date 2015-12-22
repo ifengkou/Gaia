@@ -27,11 +27,11 @@ public class CustomerPlanServiceImpl implements CustomerPlanService {
     }
 
     @Override
-    public List<CustomerPlan> getPlansByProjectID(String customerID, String projectID) {
+    public List<CustomerPlan> getPlansByContractId(String customerID, String contractID) {
         HashMap<String,String> map = new HashMap<>();
         map.put("customerID",customerID);
-        map.put("projectID",projectID);
-        return customerPlanDao.getPlansByProjectID(map);
+        map.put("contractID", contractID);
+        return customerPlanDao.getPlansByContractId(map);
     }
 
     @Override

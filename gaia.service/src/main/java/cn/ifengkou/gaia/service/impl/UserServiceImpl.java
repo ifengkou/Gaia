@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         List<HashMap<String,Object>> users = userDao.getByAccessToken(accessToken);
         if(users.size()!=1){
             if(users.size()>1){
-                LOG.error("accessToken ³öÏÖÁËÖØ¸´£¬bug£¡Çë¼ì²é£¡");
+                LOG.error("accessToken å‡ºç°äº†é‡å¤ï¼Œbugï¼Œè¯·æ£€æŸ¥");
             }
             return null;
         }

@@ -4,7 +4,7 @@ import cn.ifengkou.commons.IdGen;
 import cn.ifengkou.commons.StringUtils;
 import cn.ifengkou.gaia.common.JsonDto;
 import cn.ifengkou.gaia.common._Sys;
-import cn.ifengkou.gaia.exception.IllegalException;
+import cn.ifengkou.gaia.controller.exception.ResourceIsNotExistException;
 import cn.ifengkou.gaia.model.Contract;
 import cn.ifengkou.gaia.model.CustomerPlan;
 import cn.ifengkou.gaia.model.Project;
@@ -37,7 +37,7 @@ public class ProjectController {
 
     @RequestMapping(method= RequestMethod.GET)
     @ResponseBody
-    public JsonDto getList(@RequestParam(value = "page",defaultValue = "1")int page,HttpServletRequest request) throws IllegalException {
+    public JsonDto getList(@RequestParam(value = "page",defaultValue = "1")int page,HttpServletRequest request) {
         //id,username,usertype
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
         PageHelper.startPage(page, _Sys.PAGE_SIZE);
@@ -45,15 +45,15 @@ public class ProjectController {
         return new JsonDto(true,projects);
     }
 
-    @RequestMapping(method= RequestMethod.POST)
+    @RequestMapping(method= RequestMethod.POST,consumes = "application/json")
     @ResponseBody
-    public JsonDto add(Project project,HttpServletRequest request){
+    public JsonDto add(@RequestBody Project project,HttpServletRequest request){
         if(StringUtils.isEmpty(project.getContractName())||StringUtils.isEmpty(project.getProjectName())){
-            return new JsonDto(false,"ºÏÍ¬Ãû³ÆºÍÏîÄ¿Ãû³Æ²»ÄÜÎª¿Õ");
+            return new JsonDto(false,"åˆåŒåç§°å’Œå·¥ç¨‹åç§°ä¸å¯ä¸ºç©º");
         }
         Project temp = projectService.getByName(project.getProjectName());
         if(temp !=null){
-            return new JsonDto(false,"ÒÑ´æÔÚÏàÍ¬Ãû³ÆµÄÏîÄ¿£¬Çë¼ì²éºóÖØÊÔ");
+            return new JsonDto(false,"å·²å­˜åœ¨ç›¸åŒåç§°çš„å·¥ç¨‹ï¼Œè¯·æ£€æŸ¥é‡è¯•ï¼");
         }
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
         Contract contract = new Contract();
@@ -65,7 +65,7 @@ public class ProjectController {
         int x1=contractService.add(contract);
 
         if(x1 != 1) {
-            return new JsonDto(false,"Ôö¼ÓºÏÍ¬Ê§°Ü");
+            return new JsonDto(false,"æ–°å¢åˆåŒå¼‚å¸¸");
         }else{
             String projectId = IdGen.genId();
             project.setProjectID(projectId);
@@ -81,34 +81,40 @@ public class ProjectController {
 
     }
 
-    @RequestMapping(method= RequestMethod.PUT)
+    @RequestMapping(method= RequestMethod.PUT,value = "/{id}",consumes = "application/json")
     @ResponseBody
-    public JsonDto update(Project project) throws IllegalException {
-        Project bean = projectService.get(project.getProjectID());
+    public JsonDto update(@PathVariable("id")String id,@RequestBody Project project) throws ResourceIsNotExistException {
+        Project bean = projectService.get(id);
         if(bean == null){
-            throw new IllegalException("¹¤³Ì²»´æÔÚ");
+            throw new ResourceIsNotExistException();
         }
-        bean.setProjectName(project.getProjectName());
+        if(StringUtils.notEmpty(project.getProjectName())) {
+            bean.setProjectName(project.getProjectName());
+        }
         bean.setProjectAddr(project.getProjectAddr());
         bean.setLinkMan(project.getLinkMan());
         bean.setTel(project.getTel());
         projectService.update(bean);
-        return new JsonDto(true,project.getProjectID());
+        return new JsonDto(true,"ä¿®æ”¹æˆåŠŸ",bean.getProjectID());
     }
 
     @RequestMapping(method= RequestMethod.DELETE,value = "/{id}")
     @ResponseBody
-    public JsonDto delete(@PathVariable("id")String id,HttpServletRequest request) throws IllegalException {
+    public JsonDto delete(@PathVariable("id")String id,HttpServletRequest request) throws ResourceIsNotExistException {
         Project bean = projectService.get(id);
         if(bean == null){
-            throw new IllegalException("¹¤³Ì²»´æÔÚ");
+            throw new ResourceIsNotExistException();
         }
+        String contractId = bean.getContractID();
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
-        List<CustomerPlan> customerPlans = customerPlanService.getPlansByProjectID((String) user.get("id"),id);
+        List<CustomerPlan> customerPlans = customerPlanService.getPlansByContractId((String) user.get("id"), contractId);
         if(customerPlans !=null && customerPlans.size()>0){
-            return new JsonDto(false,"ÒÑ´æÔÚ¹¤µØ¼Æ»®£¬²»ÄÜ±»É¾³ı");
+            return new JsonDto(false,"è¯¥åˆåŒå·¥ç¨‹å·²å­˜åœ¨å·¥ç¨‹è®¡åˆ’");
         }
-        projectService.delete(id);
-        return new JsonDto(true,"É¾³ı³É¹¦",id);
+        projectService.deleteContractAndProject(contractId,id);
+        HashMap<String,String> map = new HashMap<>();
+        map.put("contractID", contractId);
+        map.put("projectID", id);
+        return new JsonDto(true,"åˆ é™¤æˆåŠŸ",id);
     }
 }

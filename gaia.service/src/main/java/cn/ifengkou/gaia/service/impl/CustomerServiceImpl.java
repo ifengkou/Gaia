@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<HashMap<String,Object>> customer = customerDao.getByAccessToken(accessToken);
         if(customer== null || customer.size()!=1){
             if(customer.size()>1){
-                LOG.error("accessToken ³öÏÖÁËÖØ¸´£¬bug£¡Çë¼ì²é£¡");
+                LOG.error("accessToken å‡ºç°äº†é‡å¤ï¼Œbugï¼Œè¯·æ£€æŸ¥");
             }
             return null;
         }
