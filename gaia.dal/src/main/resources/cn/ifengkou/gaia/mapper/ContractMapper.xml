@@ -11,8 +11,8 @@
         </select>
 
         <insert id="add" parameterType="cn.ifengkou.gaia.model.Contract">
-                insert INTO Contract(ContractID,ContractName,ContractNo,Lifecycle)
-                VALUES(#{contractID},#{contractName},#{contractNo},0)
+                insert INTO Contract(ContractID,CustomerID,ContractName,ContractNo,Lifecycle)
+                VALUES(#{contractID},#{customerID},#{contractName},#{contractNo},0)
         </insert>
 
         <update id="update" parameterType="cn.ifengkou.gaia.model.Contract">

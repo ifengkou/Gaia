@@ -1,4 +1,4 @@
-package cn.ifengkou.gaia.interceptor;
+package cn.ifengkou.gaia.controller.interceptor;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -15,7 +15,7 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter {
         boolean flag = false;
         /*if (!flag) {
             HttpSession session = request.getSession();
-            User user = (User) session.getAttribute(_SystemConstants.SESSION_NAME_USER);
+            LoginData user = (LoginData) session.getAttribute(_SystemConstants.SESSION_NAME_USER);
             if (user == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
                 flag = false;

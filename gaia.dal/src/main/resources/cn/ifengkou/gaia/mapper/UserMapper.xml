@@ -5,19 +5,19 @@
 <mapper namespace="cn.ifengkou.gaia.dao.UserDao">
 
         <select id="get" resultType="java.util.Map" parameterType="Object">
-                select UserID as id ,TrueName as username,UserType as usertype
+                select UserID as id ,TrueName as username,usertype
                 from USERS
                 where UserId = #{id} and Lifecycle >-1
         </select>
 
         <select id="getByName" resultType="java.util.Map" parameterType="Object">
-                select UserID,Password,TrueName,UserType,Token
+                select userid as id,userid as loginname,password,truename username,usertype,token
                 from USERS
                 where UserId = #{name} and Lifecycle >-1
         </select>
 
         <select id="getByAccessToken" resultType="java.util.Map" parameterType="String">
-                select UserID as id ,TrueName as username,UserType as usertype
+                select UserID as id,loginname ,TrueName as username,usertype
                 from USERS
                 where Token = #{accesstoken} and Lifecycle >-1
         </select>

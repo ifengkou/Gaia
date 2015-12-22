@@ -75,10 +75,20 @@
         <servlet-name>springServlet</servlet-name>
     </filter-mapping>
 
-    <session-config>
-        <!-- Default to 30 minute session timeouts -->
+    <!--cros 处理-->
+    <filter>
+        <filter-name>cros</filter-name>
+        <filter-class>cn.ifengkou.gaia.controller.filter.CORSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>cros</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--<session-config>
+        &lt;!&ndash; Default to 30 minute session timeouts &ndash;&gt;
         <session-timeout>30</session-timeout>
-    </session-config>
+    </session-config>-->
 
     <!--<welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

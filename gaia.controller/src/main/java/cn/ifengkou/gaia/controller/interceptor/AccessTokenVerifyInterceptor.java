@@ -1,4 +1,4 @@
-package cn.ifengkou.gaia.interceptor;
+package cn.ifengkou.gaia.controller.interceptor;
 
 import cn.ifengkou.commons.StringUtils;
 import cn.ifengkou.gaia.common._Sys;
@@ -32,7 +32,9 @@ public class AccessTokenVerifyInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        LOG.info("AccessTokenVerifyInterceptor executing.......");
+        String x = "AccessTokenVerifyInterceptor executing......我是中文.";
+        //System.out.println(x);
+        LOG.info(x);
         boolean flag = false;
         String accessToken = request.getParameter("accesstoken");
         if(StringUtils.notEmpty(accessToken)) {

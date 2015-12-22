@@ -11,12 +11,12 @@
         </select>
 
         <select id="getByName" resultType="java.util.Map" parameterType="Object">
-                select CustomerID,Password,CustName,ShortName,CustType,Token
+                select customerID id,loginname,password,CustName as username,CustType usertype,token
                 from Customer
                 where LoginName = #{name} and Lifecycle >-1
         </select>
         <select id="getByAccessToken" resultType="java.util.Map" parameterType="String">
-                select CustomerID as id, CustName as username, CustType as usertype
+                select CustomerID as id,loginname, CustName as username, CustType as usertype
                 from Customer
                 where Token = #{accesstoken} and Lifecycle >-1
         </select>

@@ -60,9 +60,9 @@ public class UserTest extends SpringTest {
     /*@Test
     public void test_addUser(){
 
-        User user = userService.getUserByLoginName(TestData.loginName);
+        LoginData user = userService.getUserByLoginName(TestData.loginName);
         if(user == null){
-            user = new User();
+            user = new LoginData();
 
             user.setId(IdGen.genId());
             user.setLoginName(TestData.loginName);
@@ -81,7 +81,7 @@ public class UserTest extends SpringTest {
     @Test
     public void getCollectionByUserId(){
         String loginName = "admin";
-        User user = userService.getUserByLoginName(loginName);
+        LoginData user = userService.getUserByLoginName(loginName);
         if(user!=null) {
             long userId = user.getId();
             List<TopicCollect> collects = userService.getCollectTopicByUserId(userId);

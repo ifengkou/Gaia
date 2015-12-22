@@ -18,11 +18,11 @@
                 where CustomerID = #{customerID} and auditStatus=1
         </select>
 
-        <select id="getPlansByProjectID" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
+        <select id="getPlansByContractId" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
                 select customerPlanID,contractID,constructUnit,projectID,projectName,projectAddr
                 ,consPos,conStrength,slump,castMode,planCube,needDate,planDate,linkMan,tel,auditStatus
                 from CustomerPlan
-                where CustomerID = #{customerID} and projectID=#{projectID}
+                where CustomerID = #{customerID} and contractID=#{contractID}
         </select>
 
         <insert id="add" parameterType="cn.ifengkou.gaia.model.CustomerPlan">

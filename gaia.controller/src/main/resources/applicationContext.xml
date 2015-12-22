@@ -10,7 +10,7 @@
 
 	<description>Spring公共配置</description>
 
-	<!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
+	<!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 Controller和ControllerAdvice已经在spring mvc 里面处理-->
 	<context:component-scan base-package="cn.ifengkou.gaia">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>

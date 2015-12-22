@@ -14,7 +14,7 @@ public interface CustomerPlanDao {
     List<CustomerPlan> getAuditedPlansByCustomerID(String customerID);
     List<CustomerPlan> getAuditingPlansByCustomerID(String customerID);
 
-    List<CustomerPlan> getPlansByProjectID(HashMap<String,String> map);
+    List<CustomerPlan> getPlansByContractId(HashMap<String,String> map);
 
     int add(CustomerPlan bean);
     int update(CustomerPlan bean);

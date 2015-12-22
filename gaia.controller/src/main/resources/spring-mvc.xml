@@ -94,9 +94,13 @@
         <!--API ACCESS TOKEN INTERCEPTOR-->
         <mvc:interceptor>
             <mvc:mapping path="/api/**"/>
-            <mvc:exclude-mapping path="/**/api/login" />
-            <mvc:exclude-mapping path="/**/api/accesstoken" />
-            <bean class="cn.ifengkou.gaia.interceptor.AccessTokenVerifyInterceptor"></bean>
+            <mvc:exclude-mapping path="/**/api/*/login" />
+            <mvc:exclude-mapping path="/**/api/*/accesstoken" />
+            <bean class="cn.ifengkou.gaia.controller.interceptor.AccessTokenVerifyInterceptor"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/api/**"/>
+            <bean class="cn.ifengkou.gaia.controller.interceptor.CrossInterceptor"/>
         </mvc:interceptor>
         <!--user auth interceptor -->
         <!--<mvc:interceptor>

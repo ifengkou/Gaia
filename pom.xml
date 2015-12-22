@@ -46,7 +46,8 @@
         <jsp.version>2.2</jsp.version>
         <jstl.version>1.2</jstl.version>
 
-        <jackson.version>1.9.13</jackson.version>
+        <jackson-dataformat-xml.version>2.6.4</jackson-dataformat-xml.version>
+        <jackson.version>2.6.0</jackson.version>
 
         <junit.version>4.10</junit.version>
         <jetty.version>8.1.10.v20130312</jetty.version>
@@ -160,22 +161,47 @@
                 <version>${org.slf4j.version}</version>
             </dependency>
 
-            <!-- json -->
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-mapper-asl</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-core-asl</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
+            <!-- json  & xml-->
+
             <!--<dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>1.2.6</version>
             </dependency>-->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${jackson-dataformat-xml.version}</version>
+            </dependency>
+
+            <!-- XML begin -->
+            <!--<dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>jaxen</groupId>
+                <artifactId>jaxen</artifactId>
+            </dependency>-->
+            <!-- XML end -->
+
 
             <dependency>
                 <groupId>commons-lang</groupId>
@@ -237,7 +263,7 @@
                     <configuration>
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
-                       <!-- <encoding>UTF-8</encoding>-->
+                        <encoding>UTF-8</encoding>
                     </configuration>
                 </plugin>
                 <plugin>
