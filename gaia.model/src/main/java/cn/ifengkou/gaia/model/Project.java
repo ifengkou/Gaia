@@ -1,5 +1,8 @@
 package cn.ifengkou.gaia.model;
 
+import java.util.Date;
+
+
 /**
  * Created by Sloong on 2015/12/17.
  */
@@ -14,8 +17,13 @@ public class Project {
     private String tel;
     private String remark;
 
+    private String builder;
+    private String modifier;
+    private Date buildTime;
+    private Date modifyTime;
+
     private String contractID;
-    private String contractName;//用于新增项目时
+    private String contractName;
 
 
     private Contract contract;
@@ -107,4 +115,37 @@ public class Project {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+    public String getBuilder() {
+        return builder;
+    }
+
+    public void setBuilder(String builder) {
+        this.builder = builder;
+    }
+
+    public String getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public Date getBuildTime() {
+        return buildTime;
+    }
+
+    public void setBuildTime(Date buildTime) {
+        this.buildTime = buildTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
 }

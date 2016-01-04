@@ -12,9 +12,11 @@ public interface CustomerPlanService {
     List<CustomerPlan> getAuditedPlansByCustomerID(String customerID);
     List<CustomerPlan> getAuditingPlansByCustomerID(String customerID);
 
-    List<CustomerPlan> getPlansByContractId(String customerID, String contractID);
+    List<CustomerPlan> getPlansByContractId(String contractID);
 
     int add(CustomerPlan bean);
     int update(CustomerPlan bean);
     int delete(String id);
+
+    CustomerPlan get(String id);
 }

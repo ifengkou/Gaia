@@ -4,31 +4,37 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.ifengkou.gaia.dao.CustomerPlanDao">
 
-        <select id="getAuditingPlansByCustomerID" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
-                select customerPlanID,contractID,constructUnit,projectID,projectName,projectAddr
-                ,consPos,conStrength,slump,castMode,planCube,needDate,planDate,linkMan,tel,auditStatus
+        <select id="get" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
+                select customerPlanID,contractID,consPos,conStrength,slump,castMode,planCube,needDate,planDate,auditStatus
                 from CustomerPlan
-                where CustomerID = #{customerID} and auditStatus=0
+                where customerPlanID = #{id}
+        </select>
+
+        <select id="getAuditingPlansByCustomerID" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
+                select p.customerPlanID,p.contractID,p.constructUnit,p.projectName,p.projectAddr
+                ,p.consPos,p.conStrength,p.slump,p.castMode,p.planCube,p.needDate,p.planDate,p.linkMan,p.tel,p.auditStatus
+                from CustomerPlan p,Contract c
+                where c.contractID = p.contractID and c.CustomerID = #{customerID} and p.auditStatus=0 order by p.autoid
         </select>
 
         <select id="getAuditedPlansByCustomerID" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
-                select customerPlanID,contractID,constructUnit,projectID,projectName,projectAddr
-                ,consPos,conStrength,slump,castMode,planCube,needDate,planDate,linkMan,tel,auditStatus
-                from CustomerPlan
-                where CustomerID = #{customerID} and auditStatus=1
+                select p.customerPlanID,p.contractID,p.constructUnit,p.projectName,p.projectAddr
+                ,p.consPos,p.conStrength,p.slump,p.castMode,p.planCube,p.needDate,p.planDate,p.linkMan,p.tel,p.auditStatus
+                from CustomerPlan p,Contract c
+                where c.contractID = p.contractID and c.CustomerID = #{customerID} and p.auditStatus=1 order by p.autoid
         </select>
 
         <select id="getPlansByContractId" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
-                select customerPlanID,contractID,constructUnit,projectID,projectName,projectAddr
+                select customerPlanID,contractID,constructUnit,projectName,projectAddr
                 ,consPos,conStrength,slump,castMode,planCube,needDate,planDate,linkMan,tel,auditStatus
                 from CustomerPlan
-                where CustomerID = #{customerID} and contractID=#{contractID}
+                where contractID=#{contractID}
         </select>
 
         <insert id="add" parameterType="cn.ifengkou.gaia.model.CustomerPlan">
-                insert INTO CustomerPlan(customerPlanID,contractID,constructUnit,projectID,projectName,projectAddr
+                insert INTO CustomerPlan(customerPlanID,contractID,constructUnit,projectName,projectAddr
                 ,consPos,conStrength,slump,castMode,planCube,needDate,planDate,linkMan,tel,auditStatus,Lifecycle)
-                VALUES(#{customerPlanID},#{contractID},#{constructUnit},#{projectID},#{projectName},#{projectAddr}
+                VALUES(#{customerPlanID},#{contractID},#{constructUnit},#{projectName},#{projectAddr}
                 ,#{consPos},#{conStrength},#{slump},#{castMode},#{planCube},#{needDate},#{planDate},#{linkMan},#{tel},0,0)
         </insert>
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ifengkou.gaia.dao.DicDao">
+
+        <select id="getDics" resultType="java.util.Map" parameterType="Object">
+                select dicId ,dicName,parentId
+                from dic
+                where parentid in ('CastMode','Slump','ConsPos')  and Lifecycle >-1
+        </select>
+        <select id="getConStrengths" resultType="java.util.Map" parameterType="Object">
+                select ConStrengthId dicId ,ConStrengthCode dicName
+                from ConStrength
+        </select>
+
+</mapper>

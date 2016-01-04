@@ -5,18 +5,19 @@
 <mapper namespace="cn.ifengkou.gaia.dao.ContractDao">
 
         <select id="get" resultType="cn.ifengkou.gaia.model.Contract" parameterType="Object">
-                select ProjectID,ProjectName,ProjectAddr,linkMan,Tel,ContractID
+                select ProjectID,ProjectName,ProjectAddr,linkMan,Tel,ContractID,builder,buildTime
                 from Contract
                 where ContractID = #{id}
         </select>
 
         <insert id="add" parameterType="cn.ifengkou.gaia.model.Contract">
-                insert INTO Contract(ContractID,CustomerID,ContractName,ContractNo,Lifecycle)
-                VALUES(#{contractID},#{customerID},#{contractName},#{contractNo},0)
+                insert INTO Contract(ContractID,CustomerID,ContractName,ContractNo,Lifecycle,builder,buildtime)
+                VALUES(#{contractID},#{customerID},#{contractName},#{contractNo},0,#{builder},GETDATE())
         </insert>
 
         <update id="update" parameterType="cn.ifengkou.gaia.model.Contract">
                 UPDATE Contract set ContractName =#{contractName},ContractNo =#{contractNo}
+                ,modifier=#{modifier},modifytime=getDate()
                 where ContractID =#{contractID}
         </update>
 

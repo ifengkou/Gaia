@@ -6,7 +6,6 @@ import cn.ifengkou.gaia.service.CustomerPlanService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,11 +26,8 @@ public class CustomerPlanServiceImpl implements CustomerPlanService {
     }
 
     @Override
-    public List<CustomerPlan> getPlansByContractId(String customerID, String contractID) {
-        HashMap<String,String> map = new HashMap<>();
-        map.put("customerID",customerID);
-        map.put("contractID", contractID);
-        return customerPlanDao.getPlansByContractId(map);
+    public List<CustomerPlan> getPlansByContractId(String contractID) {
+        return customerPlanDao.getPlansByContractId(contractID);
     }
 
     @Override
@@ -47,5 +43,10 @@ public class CustomerPlanServiceImpl implements CustomerPlanService {
     @Override
     public int delete(String id) {
         return customerPlanDao.delete(id);
+    }
+
+    @Override
+    public CustomerPlan get(String id) {
+        return customerPlanDao.get(id);
     }
 }

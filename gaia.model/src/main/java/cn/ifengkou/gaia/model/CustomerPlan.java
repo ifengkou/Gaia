@@ -9,7 +9,6 @@ public class CustomerPlan {
     private String customerPlanID;
     private String ContractID;
     private String ConstructUnit;
-    private String ProjectID;
     private String ProjectName;
     private String ProjectAddr;
     private String ConsPos;
@@ -24,7 +23,11 @@ public class CustomerPlan {
 
     private boolean auditStatus;
 
-    private Project project;
+    private String builder;
+    private String modifier;
+    private Date buildTime;
+    private Date modifyTime;
+
 
 
     public String getCustomerPlanID() {
@@ -51,13 +54,6 @@ public class CustomerPlan {
         ConstructUnit = constructUnit;
     }
 
-    public String getProjectID() {
-        return ProjectID;
-    }
-
-    public void setProjectID(String projectID) {
-        ProjectID = projectID;
-    }
 
     public String getProjectName() {
         return ProjectName;
@@ -147,12 +143,37 @@ public class CustomerPlan {
         LinkMan = linkMan;
     }
 
-    public Project getProject() {
-        return project;
+
+    public String getBuilder() {
+        return builder;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setBuilder(String builder) {
+        this.builder = builder;
+    }
+
+    public String getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public Date getBuildTime() {
+        return buildTime;
+    }
+
+    public void setBuildTime(Date buildTime) {
+        this.buildTime = buildTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public boolean isAuditStatus() {

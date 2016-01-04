@@ -56,11 +56,13 @@ public class ProjectController {
             return new JsonDto(false,"已存在相同名称的工程，请检查重试！");
         }
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
+        String userId = (String)user.get("id");
         Contract contract = new Contract();
         String contractId = IdGen.genId();
         contract.setContractID(contractId);
+        contract.setBuilder(userId);
         contract.setContractName(project.getContractName());
-        contract.setCustomerID((String) user.get("id"));
+        contract.setCustomerID(userId);
 
         int x1=contractService.add(contract);
 
@@ -69,6 +71,7 @@ public class ProjectController {
         }else{
             String projectId = IdGen.genId();
             project.setProjectID(projectId);
+            project.setBuilder(userId);
             project.setContractID(contractId);
             projectService.add(project);
 
@@ -83,7 +86,7 @@ public class ProjectController {
 
     @RequestMapping(method= RequestMethod.PUT,value = "/{id}",consumes = "application/json")
     @ResponseBody
-    public JsonDto update(@PathVariable("id")String id,@RequestBody Project project) throws ResourceIsNotExistException {
+    public JsonDto update(@PathVariable("id")String id,@RequestBody Project project,HttpServletRequest request) throws ResourceIsNotExistException {
         Project bean = projectService.get(id);
         if(bean == null){
             throw new ResourceIsNotExistException();
@@ -91,8 +94,11 @@ public class ProjectController {
         if(StringUtils.notEmpty(project.getProjectName())) {
             bean.setProjectName(project.getProjectName());
         }
+        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
+        String userId = (String)user.get("id");
         bean.setProjectAddr(project.getProjectAddr());
         bean.setLinkMan(project.getLinkMan());
+        bean.setModifier(userId);
         bean.setTel(project.getTel());
         projectService.update(bean);
         return new JsonDto(true,"修改成功",bean.getProjectID());
@@ -106,8 +112,7 @@ public class ProjectController {
             throw new ResourceIsNotExistException();
         }
         String contractId = bean.getContractID();
-        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
-        List<CustomerPlan> customerPlans = customerPlanService.getPlansByContractId((String) user.get("id"), contractId);
+        List<CustomerPlan> customerPlans = customerPlanService.getPlansByContractId(contractId);
         if(customerPlans !=null && customerPlans.size()>0){
             return new JsonDto(false,"该合同工程已存在工程计划");
         }
