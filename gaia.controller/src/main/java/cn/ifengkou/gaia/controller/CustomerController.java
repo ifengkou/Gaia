@@ -1,6 +1,5 @@
 package cn.ifengkou.gaia.controller;
 
-import cn.ifengkou.commons.DecriptTools;
 import cn.ifengkou.commons.StringUtils;
 import cn.ifengkou.commons.UUIDTools;
 import cn.ifengkou.gaia.common.JsonDto;
@@ -29,8 +28,7 @@ public class CustomerController {
         HashMap<String,Object> user = customerService.getByName(name);
         if(user!=null){
             String password = (String)user.get("password");
-            //TODO pass 前端处理加密
-            pass = DecriptTools.SHA1(pass).toUpperCase();
+            //pass = DecriptTools.SHA1(pass).toUpperCase();
 
             if(StringUtils.notEmpty(password)&&password.equals(pass)){
                 user.remove("password");

@@ -1,13 +1,13 @@
 package cn.ifengkou.gaia.controller;
 
+import cn.ifengkou.gaia.common.JsonDto;
 import cn.ifengkou.gaia.service.DicService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Sloong on 2015/12/30.
@@ -20,12 +20,14 @@ public class DicController {
     DicService dicService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<HashMap<String,Object>> getDics(){
-        return  dicService.getDics();
+    @ResponseBody
+    public JsonDto getDics(){
+        return new JsonDto(true,dicService.getDics());
     }
 
     @RequestMapping(method = RequestMethod.GET,value ="/constrength")
-    public List<HashMap<String,Object>> getConStrengths(){
-        return  dicService.getConStrengths();
+    @ResponseBody
+    public JsonDto getConStrengths(){
+        return new JsonDto(true,dicService.getConStrengths());
     }
 }

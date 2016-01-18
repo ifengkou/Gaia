@@ -22,7 +22,7 @@
                 <result column="ConstructUnit" property="constructUnit"/>
                 <result column="LinkMan" property="linkMan"/>
                 <result column="Tel" property="tel"/>
-                <result column="Remark" property="remark"/>
+                <result column="Remark" property="exceptionInfo"/>
                 <result column="builder" property="builder"/>
                 <result column="buildTime" property="buildTime"/>
                 <association property="contract" javaType="cn.ifengkou.gaia.model.Contract" resultMap="contractMap"/>

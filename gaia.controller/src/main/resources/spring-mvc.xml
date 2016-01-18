@@ -96,6 +96,7 @@
             <mvc:mapping path="/api/**"/>
             <mvc:exclude-mapping path="/**/api/*/login" />
             <mvc:exclude-mapping path="/**/api/*/accesstoken" />
+			<mvc:exclude-mapping path="/**/api/test" />
             <bean class="cn.ifengkou.gaia.controller.interceptor.AccessTokenVerifyInterceptor"></bean>
         </mvc:interceptor>
         <mvc:interceptor>

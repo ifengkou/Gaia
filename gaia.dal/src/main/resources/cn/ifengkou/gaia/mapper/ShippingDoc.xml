@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ifengkou.gaia.dao.ShippingDocDao">
+
+    <select id="getCustomerShippingDoc" resultType="java.util.Map" parameterType="Object">
+                select custName,projectName,conStrength,castMode,consPos,plancube
+                ,sum(producecubes) as produceCubes
+                ,max(producedate) as lastTime
+                from shippingdocument
+                where custName = #{userName}
+                group by custName,projectName,conStrength,castMode,consPos,plancube
+                order by projectName
+    </select>
+
+    <select id="get" resultType="cn.ifengkou.gaia.model.Shipping" parameterType="Object">
+        select shipDocID as id,custName,projectName,conStrength,shippingCube,providedTimes,providedCube,isSigned,signInCube
+        from shippingdocument
+        where shipDocID =#{id}
+    </select>
+    <update id="sign" parameterType="cn.ifengkou.gaia.model.Shipping">
+         UPDATE shippingdocument set
+         signInCube =#{signInCube},
+         exceptionInfo = #{exceptionInfo},
+         isSigned =#{isSigned},
+         modifier=#{modifier},modifytime=getDate()
+         where shipDocID =#{id}
+    </update>
+
+</mapper>

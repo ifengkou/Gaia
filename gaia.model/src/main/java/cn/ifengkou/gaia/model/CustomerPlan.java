@@ -7,19 +7,19 @@ import java.util.Date;
  */
 public class CustomerPlan {
     private String customerPlanID;
-    private String ContractID;
-    private String ConstructUnit;
-    private String ProjectName;
-    private String ProjectAddr;
-    private String ConsPos;
-    private String ConStrength;
-    private String Slump;
-    private String CastMode;
-    private double PlanCube;
-    private String NeedDate;
-    private Date PlanDate;
-    private String Tel;
-    private String LinkMan;
+    private String contractID;
+    private String constructUnit;
+    private String projectName;
+    private String projectAddr;
+    private String consPos;
+    private String conStrength;
+    private String slump;
+    private String castMode;
+    private double planCube;
+    private String needDate;
+    private Date planDate;
+    private String tel;
+    private String linkMan;
 
     private boolean auditStatus;
 
@@ -39,110 +39,108 @@ public class CustomerPlan {
     }
 
     public String getContractID() {
-        return ContractID;
+        return contractID;
     }
 
     public void setContractID(String contractID) {
-        ContractID = contractID;
+        this.contractID = contractID;
     }
 
     public String getConstructUnit() {
-        return ConstructUnit;
+        return constructUnit;
     }
 
     public void setConstructUnit(String constructUnit) {
-        ConstructUnit = constructUnit;
+        this.constructUnit = constructUnit;
     }
 
-
     public String getProjectName() {
-        return ProjectName;
+        return projectName;
     }
 
     public void setProjectName(String projectName) {
-        ProjectName = projectName;
+        this.projectName = projectName;
     }
 
     public String getProjectAddr() {
-        return ProjectAddr;
+        return projectAddr;
     }
 
     public void setProjectAddr(String projectAddr) {
-        ProjectAddr = projectAddr;
+        this.projectAddr = projectAddr;
     }
 
     public String getConsPos() {
-        return ConsPos;
+        return consPos;
     }
 
     public void setConsPos(String consPos) {
-        ConsPos = consPos;
+        this.consPos = consPos;
     }
 
     public String getConStrength() {
-        return ConStrength;
+        return conStrength;
     }
 
     public void setConStrength(String conStrength) {
-        ConStrength = conStrength;
+        this.conStrength = conStrength;
     }
 
     public String getSlump() {
-        return Slump;
+        return slump;
     }
 
     public void setSlump(String slump) {
-        Slump = slump;
+        this.slump = slump;
     }
 
     public String getCastMode() {
-        return CastMode;
+        return castMode;
     }
 
     public void setCastMode(String castMode) {
-        CastMode = castMode;
+        this.castMode = castMode;
     }
 
     public double getPlanCube() {
-        return PlanCube;
+        return planCube;
     }
 
     public void setPlanCube(double planCube) {
-        PlanCube = planCube;
+        this.planCube = planCube;
     }
 
     public String getNeedDate() {
-        return NeedDate;
+        return needDate;
     }
 
     public void setNeedDate(String needDate) {
-        NeedDate = needDate;
+        this.needDate = needDate;
     }
 
     public Date getPlanDate() {
-        return PlanDate;
+        return planDate;
     }
 
     public void setPlanDate(Date planDate) {
-        PlanDate = planDate;
+        this.planDate = planDate;
     }
 
     public String getTel() {
-        return Tel;
+        return tel;
     }
 
     public void setTel(String tel) {
-        Tel = tel;
+        this.tel = tel;
     }
 
     public String getLinkMan() {
-        return LinkMan;
+        return linkMan;
     }
 
     public void setLinkMan(String linkMan) {
-        LinkMan = linkMan;
+        this.linkMan = linkMan;
     }
-
 
     public String getBuilder() {
         return builder;
