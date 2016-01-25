@@ -40,7 +40,9 @@
 
         <update id="update" parameterType="cn.ifengkou.gaia.model.CustomerPlan">
                 UPDATE CustomerPlan set consPos =#{consPos},conStrength =#{conStrength},slump =#{slump},castMode =#{castMode}
-                ,planCube =#{planCube},needDate =#{needDate},planDate =#{planDate},linkMan =#{linkMan},tel =#{tel}
+                ,planCube =#{planCube},needDate =#{needDate},planDate =#{planDate}
+                ,projectName=#{projectName},projectAddr=#{projectAddr}
+                ,linkMan =#{linkMan},tel =#{tel}
                 where customerPlanID =#{customerPlanID}
         </update>
 

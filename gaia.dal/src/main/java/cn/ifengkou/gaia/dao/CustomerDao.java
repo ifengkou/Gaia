@@ -16,4 +16,6 @@ public interface CustomerDao {
     List<HashMap<String,Object>> getByAccessToken(String accessToken);
 
     int genToken(HashMap<String, String> map);
+
+    int changePwd(HashMap<String, String> map);
 }

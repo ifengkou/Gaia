@@ -24,4 +24,8 @@
         <update id="genToken" parameterType="java.util.Map">
                 UPDATE Customer set Token =#{token} where CustomerID =#{name}
         </update>
+
+        <update id="changePwd" parameterType="java.util.Map">
+                UPDATE Customer set password =#{password} where CustomerID =#{id}
+        </update>
 </mapper>

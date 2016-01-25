@@ -13,4 +13,6 @@ public interface CustomerService {
     HashMap<String,Object> verifyAccessToken(String accessToken);
 
     int genToken(String name, String token);
+
+    int changePwd(String id, String newPasswordCiphertext);
 }

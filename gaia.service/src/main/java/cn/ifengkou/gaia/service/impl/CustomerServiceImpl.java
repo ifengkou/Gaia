@@ -53,4 +53,12 @@ public class CustomerServiceImpl implements CustomerService {
         map.put("token",token);
         return customerDao.genToken(map);
     }
+
+    @Override
+    public int changePwd(String id, String newPassword) {
+        HashMap<String,String> map = new HashMap<>();
+        map.put("id",id);
+        map.put("password",newPassword);
+        return customerDao.changePwd(map);
+    }
 }

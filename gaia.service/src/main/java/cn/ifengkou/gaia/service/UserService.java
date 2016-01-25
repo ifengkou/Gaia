@@ -13,4 +13,6 @@ public interface UserService {
     HashMap<String,Object> verifyAccessToken(String accessToken);
 
     int genUserToken(String name, String token);
+
+    int changePwd(String id, String newPasswordCiphertext);
 }

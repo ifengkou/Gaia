@@ -3,11 +3,14 @@ package cn.ifengkou.gaia.controller;
 import cn.ifengkou.commons.StringUtils;
 import cn.ifengkou.commons.UUIDTools;
 import cn.ifengkou.gaia.common.JsonDto;
+import cn.ifengkou.gaia.common._Sys;
+import cn.ifengkou.gaia.model.ChangePwdModel;
 import cn.ifengkou.gaia.model.LoginData;
 import cn.ifengkou.gaia.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 /**
@@ -60,6 +63,24 @@ public class UserController {
         return new JsonDto(true,"验证成功",user.get("id"));
     }
 
-
+    @RequestMapping(method = RequestMethod.POST, value = "/password")
+    @ResponseBody
+    public JsonDto changePassword(ChangePwdModel model,HttpServletRequest request) {
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.USER_KEY);
+        String userId = (String) user.get("id");
+        HashMap<String,Object> map = userService.get(userId);
+        //比较密码
+        String password = (String) map.get("password");
+        int x;
+        if (StringUtils.notEmpty(password) && password.equals(model.getOldPasswordCiphertext())) {
+            x = userService.changePwd(userId,model.getNewPasswordCiphertext());
+        }else{
+            return new JsonDto(false,"原密码错误，修改失败");
+        }
+        if(x>0){
+            return new JsonDto(true, "密码修改成功", userId);
+        }
+        return new JsonDto(false,"密码修改失败");
+    }
 
 }

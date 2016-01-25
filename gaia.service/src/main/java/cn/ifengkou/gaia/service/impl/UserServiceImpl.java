@@ -52,4 +52,12 @@ public class UserServiceImpl implements UserService {
         map.put("token",token);
         return userDao.genToken(map);
     }
+
+    @Override
+    public int changePwd(String id, String newPasswordCiphertext) {
+        HashMap<String,String> map = new HashMap<>();
+        map.put("id",id);
+        map.put("password",newPasswordCiphertext);
+        return userDao.changePwd(map);
+    }
 }
