@@ -13,6 +13,6 @@ import java.util.List;
 public interface ShippingDocDao {
     List<HashMap<String,Object>> getCustomerShippingDoc(String userName);
 
-    Shipping get(String id);
+    Shipping get(HashMap<String, String> map);
     int sign(Shipping bean);
 }

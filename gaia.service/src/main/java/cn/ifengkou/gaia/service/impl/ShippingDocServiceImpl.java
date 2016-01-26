@@ -22,8 +22,11 @@ public class ShippingDocServiceImpl implements ShippingDocService {
     }
 
     @Override
-    public Shipping get(String shippingId) {
-        return shippingDocDao.get(shippingId);
+    public Shipping get(String shippingId,String userName) {
+        HashMap<String,String> map = new HashMap<>();
+        map.put("id",shippingId);
+        map.put("userName",userName);
+        return shippingDocDao.get(map);
     }
 
     @Override

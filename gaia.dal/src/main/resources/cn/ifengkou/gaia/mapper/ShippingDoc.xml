@@ -17,7 +17,7 @@
     <select id="get" resultType="cn.ifengkou.gaia.model.Shipping" parameterType="Object">
         select shipDocID as id,custName,projectName,conStrength,shippingCube,providedTimes,providedCube,isSigned,signInCube
         from shippingdocument
-        where shipDocID =#{id}
+        where shipDocID =#{id} and custName =#{userName}
     </select>
     <update id="sign" parameterType="cn.ifengkou.gaia.model.Shipping">
          UPDATE shippingdocument set

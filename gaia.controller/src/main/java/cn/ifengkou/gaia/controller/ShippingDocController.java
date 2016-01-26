@@ -36,9 +36,11 @@ public class ShippingDocController {
     @RequestMapping(method= RequestMethod.PUT,value = "/{id}/sign",consumes = "application/json")
     @ResponseBody
     public JsonDto signIn(@PathVariable("id")String id,@RequestBody Shipping shipping,HttpServletRequest request) throws ResourceIsNotExistException {
-        Shipping bean = shippingDocService.get(id);
+        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
+        Shipping bean = shippingDocService.get(id,(String) user.get("username"));
         if(bean == null){
-            throw new ResourceIsNotExistException();
+            //throw new ResourceIsNotExistException();
+            return new JsonDto(false,"当前用户下，未找到单号为【"+id+"】的发货单");
         }
         if(shipping.getIsSigned()==1&&shipping.getSignInCube()<0) {
             return new JsonDto(false,"若已签收，则签收方量不能小于0");
@@ -46,7 +48,6 @@ public class ShippingDocController {
         if(bean.getIsSigned()==1) {
             return new JsonDto(false,"该发货单已经被签核");
         }
-        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
         String userId = (String)user.get("id");
         bean.setModifier(userId);
         //MyBeanUtils.copyProperties(shipping, bean);
@@ -63,7 +64,8 @@ public class ShippingDocController {
     @RequestMapping(method= RequestMethod.GET,value = "/{id}")
     @ResponseBody
     public JsonDto get(@PathVariable("id")String id,HttpServletRequest request) throws ResourceIsNotExistException {
-        Shipping bean = shippingDocService.get(id);
+        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
+        Shipping bean = shippingDocService.get(id,(String) user.get("username"));
         if(bean == null){
             throw new ResourceIsNotExistException();
         }

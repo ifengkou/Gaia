@@ -11,7 +11,7 @@ import java.util.List;
 public interface ShippingDocService {
     List<HashMap<String,Object>> getCustomerShippingDoc(String userName);
 
-    Shipping get(String shippingId);
+    Shipping get(String shippingId,String userName);
 
     int sign(Shipping bean);
 }
