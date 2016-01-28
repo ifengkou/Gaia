@@ -6,7 +6,7 @@
 
         <select id="get" resultType="java.util.Map" parameterType="Object">
                 select *
-                from USERS
+                from Customer
                 where CustomerID = #{id} and Lifecycle >-1
         </select>
 
