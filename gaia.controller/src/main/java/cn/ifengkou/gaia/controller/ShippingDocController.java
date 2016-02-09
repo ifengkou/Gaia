@@ -67,7 +67,7 @@ public class ShippingDocController {
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
         Shipping bean = shippingDocService.get(id,(String) user.get("username"));
         if(bean == null){
-            throw new ResourceIsNotExistException();
+            return new JsonDto(false,"当前用户下，未找到单号为【"+id+"】的发货单");
         }
         return new JsonDto(true,"查询单号'"+id+"'成功",bean);
     }

@@ -14,6 +14,9 @@ public class Shipping {
     private String custName;
     private String projectName;
     private String conStrength;
+    private String consPos;
+    private String castMode;
+    private String realSlump;
     private double shippingCube;
     private int providedTimes;
     private double provideCube;
@@ -59,6 +62,30 @@ public class Shipping {
 
     public void setCustName(String custName) {
         this.custName = custName;
+    }
+
+    public String getConsPos() {
+        return consPos;
+    }
+
+    public void setConsPos(String consPos) {
+        this.consPos = consPos;
+    }
+
+    public String getCastMode() {
+        return castMode;
+    }
+
+    public void setCastMode(String castMode) {
+        this.castMode = castMode;
+    }
+
+    public String getRealSlump() {
+        return realSlump;
+    }
+
+    public void setRealSlump(String realSlump) {
+        this.realSlump = realSlump;
     }
 
     public String getProjectName() {
