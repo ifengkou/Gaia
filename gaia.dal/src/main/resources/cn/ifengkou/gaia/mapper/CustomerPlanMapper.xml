@@ -50,4 +50,17 @@
                 delete from CustomerPlan
                 where customerPlanID =#{id}
         </delete>
+
+        <!-- 以下为站内 sql 查询 -->
+        <select id="getPlansGroupInfo" resultType="java.util.Map" parameterType="Object">
+                select SUM(PlanCube) totalCube,COUNT(CustomerPlanID) planNumb
+                FROM CustomerPlan
+                WHERE AuditStatus=1 and buildtime > #{beginTime}
+        </select>
+
+        <select id="getAllAuditedPlans" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
+                select projectName,constructUnit,conStrength,castMode,consPos,needDate,planDate,auditStatus
+                from CustomerPlan
+                where AuditStatus=1 and buildtime > #{beginTime}
+        </select>
 </mapper>

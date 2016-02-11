@@ -3,6 +3,8 @@ package cn.ifengkou.gaia.dao;
 import cn.ifengkou.gaia.model.CustomerPlan;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,4 +22,10 @@ public interface CustomerPlanDao {
     int delete(String id);
 
     CustomerPlan get(String id);
+
+    //以下为站内功能
+
+    HashMap<String,Double> getPlansGroupInfo(Date beginTime);
+
+    List<CustomerPlan> getAllAuditedPlans(Date beginTime);
 }
