@@ -137,13 +137,18 @@ public class CustomerPlanController {
         return new JsonDto(true,"删除成功",bean.getCustomerPlanID());
     }
 
+    //站内功能
     /**
      * 今日工地计划列表
      * @return
      */
     @RequestMapping(method= RequestMethod.GET,value = "/today")
     @ResponseBody
-    public JsonDto auditedPlansOfToday(){
+    public JsonDto auditedPlansOfToday(HttpServletRequest request){
+        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
+        if(user == null){
+            return new JsonDto(false,"无权限");
+        }
         List<CustomerPlan> todayList = customerPlanService.getTodayAllAuditedPlans();
         return new JsonDto(true,todayList);
     }
@@ -154,7 +159,11 @@ public class CustomerPlanController {
      */
     @RequestMapping(method= RequestMethod.GET,value = "/total")
     @ResponseBody
-    public JsonDto statPlansOfToday(){
+    public JsonDto statPlansOfToday(HttpServletRequest request){
+        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
+        if(user == null){
+            return new JsonDto(false,"无权限");
+        }
         HashMap<String,Double> todayInfo = customerPlanService.getTodayPlansGroupInfo();
         return new JsonDto(true,todayInfo);
     }

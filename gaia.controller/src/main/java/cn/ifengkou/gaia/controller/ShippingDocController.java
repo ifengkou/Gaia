@@ -84,7 +84,11 @@ public class ShippingDocController {
      */
     @RequestMapping(method= RequestMethod.GET,value = "/stat")
     @ResponseBody
-    public JsonDto statShippingCubes(Date beginTime,Date endTime) {
+    public JsonDto statShippingCubes(Date beginTime,Date endTime,HttpServletRequest request) {
+        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
+        if(user == null){
+            return new JsonDto(false,"无权限");
+        }
         if(beginTime==null){
             beginTime = DateTools.getFirstDayCurrentMonth();
         }
@@ -102,7 +106,11 @@ public class ShippingDocController {
      */
     @RequestMapping(method= RequestMethod.GET,value = "/list")
     @ResponseBody
-    public JsonDto getShippingDocByTime(Date beginTime,Date endTime) {
+    public JsonDto getShippingDocByTime(Date beginTime,Date endTime,HttpServletRequest request) {
+        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
+        if(user == null){
+            return new JsonDto(false,"无权限");
+        }
         if(beginTime==null){
             beginTime = DateTools.getFirstDayCurrentMonth();
         }
