@@ -4,6 +4,7 @@ import cn.ifengkou.gaia.model.ConsMixprop;
 import cn.ifengkou.gaia.model.ConsMixpropItem;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,10 +15,10 @@ public interface ConsMixpropDao {
 
     /**
      * 根据生产线id获取未被审核的施工配比单
-     * @param productLineId
+     * @param map
      * @return
      */
-    List<ConsMixprop> getConsMixprops(String productLineId);
+    List<ConsMixprop> getConsMixprops(HashMap<String,String> map);
 
     /**
      * 根据施工配比ID，获得配比详细材料用量

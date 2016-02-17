@@ -16,6 +16,7 @@ public class ConsMixprop {
     private double wCRate;
     private double sCRate;
 
+    private boolean auditStatus;
     private String productLineId;
     private String builder;
     private Date buildTime;
@@ -125,4 +126,12 @@ public class ConsMixprop {
     public void setConsMixpropItems(List<ConsMixpropItem> consMixpropItems) {
         this.consMixpropItems = consMixpropItems;
     }*/
+
+    public boolean isAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(boolean auditStatus) {
+        this.auditStatus = auditStatus;
+    }
 }

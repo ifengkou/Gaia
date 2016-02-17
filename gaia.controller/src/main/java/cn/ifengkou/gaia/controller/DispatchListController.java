@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -29,9 +28,9 @@ public class DispatchListController {
     @RequestMapping(method = RequestMethod.GET,value = "/list")
     @ResponseBody
     public JsonDto getTodayDispatchList(){
-        Date date = new Date(115,11,8);
-        return new JsonDto(true,dispatchListService.getDispatchList(date));
-        //return new JsonDto(true,dispatchListService.getDispatchList(DateTools.getBeginOfCurrentDay()));
+        //Date date = new Date(115,11,8);
+        //return new JsonDto(true,dispatchListService.getDispatchList(date));
+        return new JsonDto(true,dispatchListService.getDispatchList(DateTools.getBeginOfCurrentDay()));
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "/stat")

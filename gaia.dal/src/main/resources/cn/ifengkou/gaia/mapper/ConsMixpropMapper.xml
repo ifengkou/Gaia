@@ -3,48 +3,47 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.ifengkou.gaia.dao.ConsMixpropDao">
-
-
-
-        <resultMap id="ResultMap" type="cn.ifengkou.gaia.model.ConsMixprop">
+        <!--<resultMap id="ResultMap" type="cn.ifengkou.gaia.model.ConsMixprop">
                 <result column="ConsMixpropID" property="id"/>
                 <result column="formulaId" property="formulaId"/>
                 <result column="formulaName" property="formulaName"/>
                 <result column="seasonType" property="seasonType"/>
                 <result column="conStrength" property="conStrength"/>
-                <result column="slump" property="slump"/>
                 <result column="weight" property="weight"/>
+                <result column="auditStatus" property="auditStatus"/>
                 <result column="wCRate" property="wCRate"/>
                 <result column="sCRate" property="sCRate"/>
                 <result column="productLineId" property="productLineId"/>
                 <result column="builder" property="builder"/>
                 <result column="buildTime" property="buildTime"/>
-                <!--<association property="contract" javaType="cn.ifengkou.gaia.model.ConsMixpropItem" resultMap="itemMap"/>-->
-        </resultMap>
-        <select id="getConsMixprops" resultMap="ResultMap" parameterType="Object">
-                select m.ConsMixpropID ,f.formulaId,f.formulaName,m.seasonType,m.conStrength,m.slump
+                &lt;!&ndash;<association property="contract" javaType="cn.ifengkou.gaia.model.ConsMixpropItem" resultMap="itemMap"/>&ndash;&gt;
+        </resultMap>-->
+        <select id="getConsMixprops" resultType="cn.ifengkou.gaia.model.ConsMixprop" parameterType="Object">
+                select m.ConsMixpropID id,f.formulaId,f.formulaName,m.seasonType,m.conStrength,m.auditStatus
                 ,m.weight,m.wCRate,m.sCRate,m.productLineId,m.builder,m.buildTime
                 from ConsMixprop m,formula f
-                where m.auditstatus != 1
+                where m.auditStatus != 1
                 and m.formulaId = f.formulaId
-                and m.productLineId = #{productLineId}
+                <if test="productLineId != null and productLineId != ''">
+                     and m.productLineId = #{productLineId}
+                </if>
                 ORDER BY m.BuildTime desc
         </select>
 
-        <resultMap id="itemMap" type="cn.ifengkou.gaia.model.ConsMixpropItem">
+       <!-- <resultMap id="itemMap" type="cn.ifengkou.gaia.model.ConsMixpropItem">
                 <result column="ConsMixpropItemsID" property="id"/>
                 <result column="s.siloId" property="siloId"/>
                 <result column="s.siloName" property="siloName"/>
-                <!--<result column="s.stuffId" property="stuffId"/>
+                &lt;!&ndash;<result column="s.stuffId" property="stuffId"/>
                 <result column="s.stuffName" property="stuffName"/>
-                <result column="s.stuffSpec" property="stuffSpec"/>-->
+                <result column="s.stuffSpec" property="stuffSpec"/>&ndash;&gt;
                 <result column="amount" property="amount"/>
                 <result column="builder" property="builder"/>
                 <result column="buildTime" property="buildTime"/>
-        </resultMap>
+        </resultMap>-->
 
-        <select id="getConsMixpropItems" resultMap="itemMap" parameterType="Object">
-                select m.ConsMixpropItemsID ,f.siloId,s.siloName,m.amount,m.builder,m.buildTime
+        <select id="getConsMixpropItems" resultType="cn.ifengkou.gaia.model.ConsMixpropItem" parameterType="Object">
+                select m.ConsMixpropItemsID id,s.siloId,s.siloName,m.amount,m.builder,m.buildTime
                 from ConsMixpropItems m,silo s
                 where 1=1
                 and m.siloId = s.siloId
@@ -53,8 +52,8 @@
         </select>
 
         <update id="audit" parameterType="Object">
-                UPDATE ConsMixprop set auditstatus=1,auditTime=getDate()
-                where ConsMixpropID =#{consMixpropId}
+                UPDATE ConsMixprop set auditStatus=1,auditTime=getDate()
+                where ConsMixpropID =#{consMixpropId} and auditStatus!=1
         </update>
 
 </mapper>

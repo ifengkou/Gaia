@@ -7,6 +7,7 @@ import cn.ifengkou.gaia.service.ConsMixpropService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,7 +20,9 @@ public class ConsMixpropServiceImpl implements ConsMixpropService{
     ConsMixpropDao consMixpropDao;
     @Override
     public List<ConsMixprop> getConsMixprops(String productLineId) {
-        return consMixpropDao.getConsMixprops(productLineId);
+        HashMap<String,String> map = new HashMap<>();
+        map.put("productLineId",productLineId);
+        return consMixpropDao.getConsMixprops(map);
     }
 
     @Override
