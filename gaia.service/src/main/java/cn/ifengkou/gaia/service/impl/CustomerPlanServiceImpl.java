@@ -1,12 +1,12 @@
 package cn.ifengkou.gaia.service.impl;
 
+import cn.ifengkou.commons.DateTools;
 import cn.ifengkou.gaia.dao.CustomerPlanDao;
 import cn.ifengkou.gaia.model.CustomerPlan;
 import cn.ifengkou.gaia.service.CustomerPlanService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,15 +54,15 @@ public class CustomerPlanServiceImpl implements CustomerPlanService {
 
     @Override
     public HashMap<String, Double> getTodayPlansGroupInfo() {
-        Date date = new Date(115,10,28);
-        return customerPlanDao.getPlansGroupInfo(date);
-        //return customerPlanDao.getPlansGroupInfo(DateTools.getBeginOfCurrentDay());
+        //Date date = new Date(115,10,28);
+        //return customerPlanDao.getPlansGroupInfo(date);
+        return customerPlanDao.getPlansGroupInfo(DateTools.getBeginOfCurrentDay());
     }
 
     @Override
     public List<CustomerPlan> getTodayAllAuditedPlans() {
-        Date date = new Date(115,10,28);
-        return customerPlanDao.getAllAuditedPlans(date);
-        //return customerPlanDao.getAllAuditedPlans(DateTools.getBeginOfCurrentDay());
+        //Date date = new Date(115,10,28);
+        //return customerPlanDao.getAllAuditedPlans(date);
+        return customerPlanDao.getAllAuditedPlans(DateTools.getBeginOfCurrentDay());
     }
 }
