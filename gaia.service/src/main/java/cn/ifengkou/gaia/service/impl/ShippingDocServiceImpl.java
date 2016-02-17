@@ -6,6 +6,7 @@ import cn.ifengkou.gaia.service.ShippingDocService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,4 +34,22 @@ public class ShippingDocServiceImpl implements ShippingDocService {
     public int sign(Shipping bean) {
         return shippingDocDao.sign(bean);
     }
+
+    @Override
+    public HashMap<String, Object> statShippingCubes(Date beginTime, Date endTime) {
+        HashMap<String,Date> map = new HashMap<>();
+        map.put("beginTime",beginTime);
+        map.put("endTime",endTime);
+        return shippingDocDao.statShippingCubes(map);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getShippingDocByTime(Date beginTime, Date endTime) {
+        HashMap<String,Date> map = new HashMap<>();
+        map.put("beginTime",beginTime);
+        map.put("endTime",endTime);
+        return shippingDocDao.getShippingDocByTime(map);
+    }
+
+
 }

@@ -18,6 +18,7 @@ public class DateToolsTest {
         Date firstOfMonth = DateTools.getFirstDayCurrentMonth();
         System.out.println(firstOfMonth.getTime());
         System.out.println(format.format(firstOfMonth));
+        System.out.println(firstOfMonth.getTime());
 
         Date firstOfYear = DateTools.getFirstDayOfCurrentYear();
         System.out.println(firstOfYear.getTime());

@@ -1,5 +1,6 @@
 package cn.ifengkou.gaia.controller;
 
+import cn.ifengkou.commons.DateTools;
 import cn.ifengkou.gaia.common.JsonDto;
 import cn.ifengkou.gaia.common._Sys;
 import cn.ifengkou.gaia.controller.exception.ResourceIsNotExistException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -70,5 +72,43 @@ public class ShippingDocController {
             return new JsonDto(false,"当前用户下，未找到单号为【"+id+"】的发货单");
         }
         return new JsonDto(true,"查询单号'"+id+"'成功",bean);
+    }
+
+    //站内功能
+
+    /**
+     * 出票方量、调度方量统计
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @RequestMapping(method= RequestMethod.GET,value = "/stat")
+    @ResponseBody
+    public JsonDto statShippingCubes(Date beginTime,Date endTime) {
+        if(beginTime==null){
+            beginTime = DateTools.getFirstDayCurrentMonth();
+        }
+        if(endTime == null){
+            endTime = new Date();
+        }
+        return new JsonDto(true,shippingDocService.statShippingCubes(beginTime,endTime));
+    }
+
+    /**
+     * 生产方量统计，按工地和砼强度分组
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @RequestMapping(method= RequestMethod.GET,value = "/list")
+    @ResponseBody
+    public JsonDto getShippingDocByTime(Date beginTime,Date endTime) {
+        if(beginTime==null){
+            beginTime = DateTools.getFirstDayCurrentMonth();
+        }
+        if(endTime == null){
+            endTime = new Date();
+        }
+        return new JsonDto(true,shippingDocService.getShippingDocByTime(beginTime,endTime));
     }
 }
