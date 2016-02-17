@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * Created by Sloong on 2015/12/17.
@@ -55,15 +54,15 @@ public class CustomerPlanServiceImpl implements CustomerPlanService {
 
     @Override
     public HashMap<String, Double> getTodayPlansGroupInfo() {
-        long current=System.currentTimeMillis();//当前时间毫秒数
-        long zero=current/(1000*3600*24)*(1000*3600*24)- TimeZone.getDefault().getRawOffset();//今天零点零分零秒的毫秒数
-        return customerPlanDao.getPlansGroupInfo(new Date(zero));
+        Date date = new Date(115,10,28);
+        return customerPlanDao.getPlansGroupInfo(date);
+        //return customerPlanDao.getPlansGroupInfo(DateTools.getBeginOfCurrentDay());
     }
 
     @Override
     public List<CustomerPlan> getTodayAllAuditedPlans() {
-        long current=System.currentTimeMillis();//当前时间毫秒数
-        long zero=current/(1000*3600*24)*(1000*3600*24)- TimeZone.getDefault().getRawOffset();//今天零点零分零秒的毫秒数
-        return customerPlanDao.getAllAuditedPlans(new Date(zero));
+        Date date = new Date(115,10,28);
+        return customerPlanDao.getAllAuditedPlans(date);
+        //return customerPlanDao.getAllAuditedPlans(DateTools.getBeginOfCurrentDay());
     }
 }

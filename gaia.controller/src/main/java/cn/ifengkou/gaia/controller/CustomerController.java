@@ -40,8 +40,8 @@ public class CustomerController {
                 String token = (String) user.get("token");
                 if (StringUtils.isEmpty(token)) {
                     token = UUIDTools.uuid();
-
-                    customerService.genToken(name, token);
+                    String customerId = (String) user.get("id");
+                    customerService.genToken(customerId, token);
 
                     user.put("token", token);
                 }

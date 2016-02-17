@@ -23,6 +23,8 @@ public class CustomerPlan {
 
     private boolean auditStatus;
 
+    private Date auditTime;
+    private String auditor;
     private String builder;
     private String modifier;
     private Date buildTime;
@@ -180,5 +182,21 @@ public class CustomerPlan {
 
     public void setAuditStatus(boolean auditStatus) {
         this.auditStatus = auditStatus;
+    }
+
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
+    }
+
+    public String getAuditor() {
+        return auditor;
+    }
+
+    public void setAuditor(String auditor) {
+        this.auditor = auditor;
     }
 }

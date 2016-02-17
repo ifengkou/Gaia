@@ -136,4 +136,26 @@ public class CustomerPlanController {
         customerPlanService.delete(id);
         return new JsonDto(true,"删除成功",bean.getCustomerPlanID());
     }
+
+    /**
+     * 今日工地计划列表
+     * @return
+     */
+    @RequestMapping(method= RequestMethod.GET,value = "/today")
+    @ResponseBody
+    public JsonDto auditedPlansOfToday(){
+        List<CustomerPlan> todayList = customerPlanService.getTodayAllAuditedPlans();
+        return new JsonDto(true,todayList);
+    }
+
+    /**
+     * 工地总计划数，总方量数
+     * @return
+     */
+    @RequestMapping(method= RequestMethod.GET,value = "/total")
+    @ResponseBody
+    public JsonDto statPlansOfToday(){
+        HashMap<String,Double> todayInfo = customerPlanService.getTodayPlansGroupInfo();
+        return new JsonDto(true,todayInfo);
+    }
 }

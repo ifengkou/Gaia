@@ -22,7 +22,7 @@
         </select>
 
         <update id="genToken" parameterType="java.util.Map">
-                UPDATE Customer set Token =#{token} where CustomerID =#{name}
+                UPDATE Customer set Token =#{token} where CustomerID =#{id}
         </update>
 
         <update id="changePwd" parameterType="java.util.Map">

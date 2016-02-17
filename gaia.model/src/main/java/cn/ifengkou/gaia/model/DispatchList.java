@@ -6,16 +6,7 @@ package cn.ifengkou.gaia.model;
  */
 public class DispatchList {
     /*
-    select d.DispatchID id,d.taskId,d.productLineId
-   ,l.productLineName
-   ,t.projectName,t.constructUnit,t.conStrength,t.castMode,t.consPos,t.slump
-from DispatchList d ,ProduceTasks t ,ProductLine l
-where 1=1
-	and d.TaskID = t.TaskID
-  and d.ProductLineID = l.AutoID
-	AND d.IsCompleted = 1
-	and d.IsRunning = 1
-	and d.buildtime>'2015-05-01'
+
      */
     private String id;
     private String taskId;

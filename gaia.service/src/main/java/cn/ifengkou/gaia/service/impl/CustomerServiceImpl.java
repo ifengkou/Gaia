@@ -47,9 +47,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public int genToken(String name, String token) {
+    public int genToken(String id, String token) {
         HashMap<String,String> map = new HashMap<>();
-        map.put("name",name);
+        map.put("id",id);
         map.put("token",token);
         return customerDao.genToken(map);
     }

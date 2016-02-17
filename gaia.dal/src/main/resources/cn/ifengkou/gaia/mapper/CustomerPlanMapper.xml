@@ -59,7 +59,7 @@
         </select>
 
         <select id="getAllAuditedPlans" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
-                select projectName,constructUnit,conStrength,castMode,consPos,needDate,planDate,auditStatus
+                select projectName,constructUnit,conStrength,castMode,consPos,needDate,planDate,auditStatus,customerPlanID,contractID,builder,buildTime,auditTime
                 from CustomerPlan
                 where AuditStatus=1 and buildtime > #{beginTime}
         </select>

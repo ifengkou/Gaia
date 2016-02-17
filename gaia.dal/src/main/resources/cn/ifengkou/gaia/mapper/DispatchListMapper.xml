@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ifengkou.gaia.dao.DispatchListDao">
+    <select id="getDispatchList" resultType="cn.ifengkou.gaia.model.DispatchList" parameterType="Object">
+        select d.DispatchID id,d.taskId,d.productLineId
+           ,l.productLineName
+           ,t.projectName,t.constructUnit,t.conStrength,t.castMode,t.consPos,t.slump
+        from DispatchList d ,ProduceTasks t ,ProductLine l
+        where 1=1
+            and d.TaskID = t.TaskID
+            and d.ProductLineID = l.AutoID
+            AND d.IsCompleted = 1
+            and d.IsRunning = 1
+            and d.buildtime>#{beginTime}
+    </select>
+
+    <select id="statDispatchList" resultType="java.util.Map" parameterType="Object">
+        select count(d.TaskID) planNum,SUM(t.plancube) planCubes,SUM(d.ProduceCube) produceCubes
+        from DispatchList d,ProduceTasks t
+        where 1=1
+            and d.TaskID = t.TaskID
+            and d.BuildTime >#{beginTime}
+    </select>
+
+</mapper>
