@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Sloong on 2016/2/12.
  */
-@Service
+@Service("dispatchListService")
 public class DispatchListServiceImpl implements DispatchListService {
 
     @Resource
