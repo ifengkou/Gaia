@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
         return customerDao.getByName(name);
     }
 
-    @Cacheable(value = "accessTokenUser",key = "#accessToken")
+    @Cacheable(value = "accessTokenCustomer",key = "#accessToken")
     @Override
     public HashMap<String,Object> verifyAccessToken(String accessToken) {
         LOG.info("customer token check:{}",accessToken);
