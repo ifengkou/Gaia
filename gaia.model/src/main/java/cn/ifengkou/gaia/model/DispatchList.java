@@ -14,6 +14,7 @@ public class DispatchList {
     private String productLineName;
     private String projectName;
     private String constructUnit;
+    private String conStrength;
     private String castMode;
     private String consPos;
     private String slump;
@@ -64,6 +65,14 @@ public class DispatchList {
 
     public void setConstructUnit(String constructUnit) {
         this.constructUnit = constructUnit;
+    }
+
+    public String getConStrength() {
+        return conStrength;
+    }
+
+    public void setConStrength(String conStrength) {
+        this.conStrength = conStrength;
     }
 
     public String getCastMode() {
