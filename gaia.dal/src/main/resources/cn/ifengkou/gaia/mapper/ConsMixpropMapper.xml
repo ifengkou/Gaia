@@ -3,57 +3,59 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.ifengkou.gaia.dao.ConsMixpropDao">
-        <!--<resultMap id="ResultMap" type="cn.ifengkou.gaia.model.ConsMixprop">
-                <result column="ConsMixpropID" property="id"/>
-                <result column="formulaId" property="formulaId"/>
-                <result column="formulaName" property="formulaName"/>
-                <result column="seasonType" property="seasonType"/>
-                <result column="conStrength" property="conStrength"/>
-                <result column="weight" property="weight"/>
-                <result column="auditStatus" property="auditStatus"/>
-                <result column="wCRate" property="wCRate"/>
-                <result column="sCRate" property="sCRate"/>
-                <result column="productLineId" property="productLineId"/>
-                <result column="builder" property="builder"/>
-                <result column="buildTime" property="buildTime"/>
-                &lt;!&ndash;<association property="contract" javaType="cn.ifengkou.gaia.model.ConsMixpropItem" resultMap="itemMap"/>&ndash;&gt;
-        </resultMap>-->
-        <select id="getConsMixprops" resultType="cn.ifengkou.gaia.model.ConsMixprop" parameterType="Object">
-                select m.ConsMixpropID id,f.formulaId,f.formulaName,m.seasonType,m.conStrength,m.auditStatus
-                ,m.weight,m.wCRate,m.sCRate,m.productLineId,m.builder,m.buildTime
-                from ConsMixprop m,formula f
-                where m.auditStatus != 1
-                and m.formulaId = f.formulaId
-                <if test="productLineId != null and productLineId != ''">
-                     and m.productLineId = #{productLineId}
-                </if>
-                ORDER BY m.BuildTime desc
-        </select>
+    <!--<resultMap id="ResultMap" type="cn.ifengkou.gaia.model.ConsMixprop">
+            <result column="ConsMixpropID" property="id"/>
+            <result column="formulaId" property="formulaId"/>
+            <result column="formulaName" property="formulaName"/>
+            <result column="seasonType" property="seasonType"/>
+            <result column="conStrength" property="conStrength"/>
+            <result column="weight" property="weight"/>
+            <result column="auditStatus" property="auditStatus"/>
+            <result column="wCRate" property="wCRate"/>
+            <result column="sCRate" property="sCRate"/>
+            <result column="productLineId" property="productLineId"/>
+            <result column="builder" property="builder"/>
+            <result column="buildTime" property="buildTime"/>
+            &lt;!&ndash;<association property="contract" javaType="cn.ifengkou.gaia.model.ConsMixpropItem" resultMap="itemMap"/>&ndash;&gt;
+    </resultMap>-->
+    <select id="getConsMixprops" resultType="cn.ifengkou.gaia.model.ConsMixprop" parameterType="Object">
+        select m.ConsMixpropID id,f.formulaId,f.formulaName,m.seasonType,m.auditStatus
+        ,m.weight,m.wCRate,m.sCRate,m.productLineId,m.builder,m.buildTime
+        ,t.taskId,t.contractId,t.projectId,t.projectName,t.constructUnit,t.conStrength,t.consPos,t.castMode
+        from ConsMixprop m,formula f,ProduceTasks t
+        where m.auditStatus != 1
+        and m.formulaId = f.formulaId
+        and m.taskId = t.taskId
+        <if test="productLineId != null and productLineId != ''">
+            and m.productLineId = #{productLineId}
+        </if>
+        ORDER BY m.BuildTime desc
+    </select>
 
-       <!-- <resultMap id="itemMap" type="cn.ifengkou.gaia.model.ConsMixpropItem">
-                <result column="ConsMixpropItemsID" property="id"/>
-                <result column="s.siloId" property="siloId"/>
-                <result column="s.siloName" property="siloName"/>
-                &lt;!&ndash;<result column="s.stuffId" property="stuffId"/>
-                <result column="s.stuffName" property="stuffName"/>
-                <result column="s.stuffSpec" property="stuffSpec"/>&ndash;&gt;
-                <result column="amount" property="amount"/>
-                <result column="builder" property="builder"/>
-                <result column="buildTime" property="buildTime"/>
-        </resultMap>-->
+    <!-- <resultMap id="itemMap" type="cn.ifengkou.gaia.model.ConsMixpropItem">
+             <result column="ConsMixpropItemsID" property="id"/>
+             <result column="s.siloId" property="siloId"/>
+             <result column="s.siloName" property="siloName"/>
+             &lt;!&ndash;<result column="s.stuffId" property="stuffId"/>
+             <result column="s.stuffName" property="stuffName"/>
+             <result column="s.stuffSpec" property="stuffSpec"/>&ndash;&gt;
+             <result column="amount" property="amount"/>
+             <result column="builder" property="builder"/>
+             <result column="buildTime" property="buildTime"/>
+     </resultMap>-->
 
-        <select id="getConsMixpropItems" resultType="cn.ifengkou.gaia.model.ConsMixpropItem" parameterType="Object">
-                select m.ConsMixpropItemsID id,s.siloId,s.siloName,m.amount,m.builder,m.buildTime
-                from ConsMixpropItems m,silo s
-                where 1=1
-                and m.siloId = s.siloId
-                and m.ConsMixpropID = #{productLineId}
-                ORDER BY m.BuildTime desc
-        </select>
+    <select id="getConsMixpropItems" resultType="cn.ifengkou.gaia.model.ConsMixpropItem" parameterType="Object">
+      select m.ConsMixpropItemsID id,s.siloId,s.siloName,m.amount,m.builder,m.buildTime
+       from ConsMixpropItems m,silo s
+       where 1=1
+        and m.siloId = s.siloId
+        and m.ConsMixpropID = #{productLineId}
+       ORDER BY m.BuildTime desc
+    </select>
 
-        <update id="audit" parameterType="Object">
+    <update id="audit" parameterType="Object">
                 UPDATE ConsMixprop set auditStatus=1,auditTime=getDate()
                 where ConsMixpropID =#{consMixpropId} and auditStatus!=1
-        </update>
+    </update>
 
 </mapper>

@@ -10,7 +10,7 @@ public class ConsMixprop {
     private String formulaId;
     private String formulaName;
     private String seasonType;
-    private String conStrength;
+
     private String slump;
     private double weight;
     private double wCRate;
@@ -18,10 +18,19 @@ public class ConsMixprop {
 
     private boolean auditStatus;
     private String productLineId;
+
+
+    private String taskId;
+    private String contractId;
+    private String projectId;
+    private String projectName;
+    private String constructUnit;
+    private String conStrength;
+    private String consPos;
+    private String castMode;
+
     private String builder;
     private Date buildTime;
-
-    //private List<ConsMixpropItem> consMixpropItems;
 
     public String getId() {
         return id;
@@ -53,22 +62,6 @@ public class ConsMixprop {
 
     public void setSeasonType(String seasonType) {
         this.seasonType = seasonType;
-    }
-
-    public String getProductLineId() {
-        return productLineId;
-    }
-
-    public void setProductLineId(String productLineId) {
-        this.productLineId = productLineId;
-    }
-
-    public String getConStrength() {
-        return conStrength;
-    }
-
-    public void setConStrength(String conStrength) {
-        this.conStrength = conStrength;
     }
 
     public String getSlump() {
@@ -103,6 +96,86 @@ public class ConsMixprop {
         this.sCRate = sCRate;
     }
 
+    public boolean isAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(boolean auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public String getProductLineId() {
+        return productLineId;
+    }
+
+    public void setProductLineId(String productLineId) {
+        this.productLineId = productLineId;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getConstructUnit() {
+        return constructUnit;
+    }
+
+    public void setConstructUnit(String constructUnit) {
+        this.constructUnit = constructUnit;
+    }
+
+    public String getConStrength() {
+        return conStrength;
+    }
+
+    public void setConStrength(String conStrength) {
+        this.conStrength = conStrength;
+    }
+
+    public String getConsPos() {
+        return consPos;
+    }
+
+    public void setConsPos(String consPos) {
+        this.consPos = consPos;
+    }
+
+    public String getCastMode() {
+        return castMode;
+    }
+
+    public void setCastMode(String castMode) {
+        this.castMode = castMode;
+    }
+
     public String getBuilder() {
         return builder;
     }
@@ -117,21 +190,5 @@ public class ConsMixprop {
 
     public void setBuildTime(Date buildTime) {
         this.buildTime = buildTime;
-    }
-
-    /*public List<ConsMixpropItem> getConsMixpropItems() {
-        return consMixpropItems;
-    }
-
-    public void setConsMixpropItems(List<ConsMixpropItem> consMixpropItems) {
-        this.consMixpropItems = consMixpropItems;
-    }*/
-
-    public boolean isAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(boolean auditStatus) {
-        this.auditStatus = auditStatus;
     }
 }
