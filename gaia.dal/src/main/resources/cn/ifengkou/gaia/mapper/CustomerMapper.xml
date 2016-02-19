@@ -5,7 +5,7 @@
 <mapper namespace="cn.ifengkou.gaia.dao.CustomerDao">
 
         <select id="get" resultType="java.util.Map" parameterType="Object">
-                select *
+                select CustomerID as id ,CustName as username,CustType usertype,password
                 from Customer
                 where CustomerID = #{id} and Lifecycle >-1
         </select>

@@ -70,7 +70,7 @@ public class CustomerController {
         String customerId = (String) user.get("id");
         HashMap<String,Object> map = customerService.get(customerId);
         //比较密码
-        String password = (String) map.get("Password");
+        String password = (String) map.get("password");
         int x;
         if (StringUtils.notEmpty(password) && password.equals(model.getOldPasswordCiphertext())) {
             x = customerService.changePwd(customerId,model.getNewPasswordCiphertext());

@@ -66,11 +66,11 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/password")
     @ResponseBody
     public JsonDto changePassword(@RequestBody ChangePwdModel model,HttpServletRequest request) {
-        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.USER_KEY);
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
         String userId = (String) user.get("id");
         HashMap<String,Object> map = userService.get(userId);
         //比较密码
-        String password = (String) map.get("Password");
+        String password = (String) map.get("password");
         int x;
         if (StringUtils.notEmpty(password) && password.equals(model.getOldPasswordCiphertext())) {
             x = userService.changePwd(userId,model.getNewPasswordCiphertext());
