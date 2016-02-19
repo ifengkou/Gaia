@@ -1,6 +1,5 @@
 package cn.ifengkou.gaia.controller;
 
-import cn.ifengkou.commons.DateTools;
 import cn.ifengkou.gaia.common.JsonDto;
 import cn.ifengkou.gaia.common._Sys;
 import cn.ifengkou.gaia.controller.exception.ResourceIsNotExistException;
@@ -84,18 +83,17 @@ public class ShippingDocController {
      */
     @RequestMapping(method= RequestMethod.GET,value = "/stat")
     @ResponseBody
-    public JsonDto statShippingCubes(Date beginTime,Date endTime,HttpServletRequest request) {
+    public JsonDto statShippingCubes(long beginTime,long endTime,HttpServletRequest request) {
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
         if(user == null){
             return new JsonDto(false,"无权限");
         }
-        if(beginTime==null){
-            beginTime = DateTools.getFirstDayCurrentMonth();
+        if(beginTime-endTime>0){
+            return new JsonDto(false,"开始时间不得大于结束时间");
         }
-        if(endTime == null){
-            endTime = new Date();
-        }
-        return new JsonDto(true,shippingDocService.statShippingCubes(beginTime,endTime));
+        Date bTime = new Date(beginTime);
+        Date eTime = new Date(endTime);
+        return new JsonDto(true,shippingDocService.statShippingCubes(bTime,eTime));
     }
 
     /**
@@ -106,17 +104,16 @@ public class ShippingDocController {
      */
     @RequestMapping(method= RequestMethod.GET,value = "/list")
     @ResponseBody
-    public JsonDto getShippingDocByTime(Date beginTime,Date endTime,HttpServletRequest request) {
+    public JsonDto getShippingDocByTime(long beginTime,long endTime,HttpServletRequest request) {
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
         if(user == null){
             return new JsonDto(false,"无权限");
         }
-        if(beginTime==null){
-            beginTime = DateTools.getFirstDayCurrentMonth();
+        if(beginTime-endTime>0){
+            return new JsonDto(false,"开始时间不得大于结束时间");
         }
-        if(endTime == null){
-            endTime = new Date();
-        }
-        return new JsonDto(true,shippingDocService.getShippingDocByTime(beginTime,endTime));
+        Date bTime = new Date(beginTime);
+        Date eTime = new Date(endTime);
+        return new JsonDto(true,shippingDocService.getShippingDocByTime(bTime,eTime));
     }
 }
