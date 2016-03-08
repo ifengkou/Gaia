@@ -45,16 +45,18 @@
      </resultMap>-->
 
     <select id="getConsMixpropItems" resultType="cn.ifengkou.gaia.model.ConsMixpropItem" parameterType="Object">
-      select m.ConsMixpropItemsID id,s.siloId,s.siloName,m.amount,m.builder,m.buildTime
-       from ConsMixpropItems m,silo s
+      select m.ConsMixpropItemsID id,m.amount,m.builder,m.buildTime
+            ,s.siloId,s.siloName,f.stuffId,f.stuffName
+       from ConsMixpropItems m,silo s,stuffinfo f
        where 1=1
         and m.siloId = s.siloId
-        and m.ConsMixpropID = #{productLineId}
-       ORDER BY m.BuildTime desc
+        and s.stuffId = f.stuffId
+        and m.ConsMixpropID = #{consMixpropID}
+       ORDER BY m.id desc
     </select>
 
-    <update id="audit" parameterType="Object">
-                UPDATE ConsMixprop set auditStatus=1,auditTime=getDate()
+    <update id="audit" parameterType="java.util.Map">
+                UPDATE ConsMixprop set auditStatus=1,auditTime=getDate(),auditor=#{userId}
                 where ConsMixpropID =#{consMixpropId} and auditStatus!=1
     </update>
 

@@ -60,7 +60,7 @@ public class ConsMixpropController {
         if(user == null){
             return new JsonDto(false,"无权限");
         }
-        int x = consMixpropService.audit(id);
+        int x = consMixpropService.audit(id,(String)user.get("id"));
         if(x == 1){
             return new JsonDto(true,"审核["+id+"]成功");
         }

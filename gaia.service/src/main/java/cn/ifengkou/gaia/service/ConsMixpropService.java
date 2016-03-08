@@ -28,5 +28,5 @@ public interface ConsMixpropService {
      * @param consMixpropId
      * @return
      */
-    int audit(String consMixpropId);
+    int audit(String consMixpropId,String userId);
 }

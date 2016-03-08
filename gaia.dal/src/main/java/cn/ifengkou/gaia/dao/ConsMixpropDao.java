@@ -27,5 +27,5 @@ public interface ConsMixpropDao {
      */
     List<ConsMixpropItem> getConsMixpropItems(String consMixpropId);
 
-    int audit(String consMixpropId);
+    int audit(HashMap<String,String> map);
 }

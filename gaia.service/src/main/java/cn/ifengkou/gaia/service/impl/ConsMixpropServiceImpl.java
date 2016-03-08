@@ -31,7 +31,10 @@ public class ConsMixpropServiceImpl implements ConsMixpropService{
     }
 
     @Override
-    public int audit(String consMixpropId){
-        return consMixpropDao.audit(consMixpropId);
+    public int audit(String consMixpropId,String userId){
+        HashMap<String,String> map = new HashMap<>();
+        map.put("userId",userId);
+        map.put("consMixpropId",consMixpropId);
+        return consMixpropDao.audit(map);
     }
 }
