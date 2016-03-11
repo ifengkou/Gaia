@@ -16,12 +16,26 @@
             and d.buildtime>#{beginTime}
     </select>
 
-    <select id="statDispatchList" resultType="java.util.Map" parameterType="Object">
-        select count(d.TaskID) planNum,SUM(t.plancube) planCubes,SUM(d.ProduceCube) produceCubes
-        from DispatchList d,ProduceTasks t
+    <!--<select id="statDispatchList" resultType="java.util.Map" parameterType="Object">
+        select count(d.TaskID) planNum,SUM(t.plancube) planCubes,SUM(d.sendcube) produceCubes
+        from Shippingdocument d,ProduceTasks t
         where 1=1
             and d.TaskID = t.TaskID
-            and d.BuildTime >#{beginTime}
+            and d.produceDate >#{beginTime}
+    </select>-->
+
+    <resultMap type="java.util.Map" id="resultMap">
+        <result property="produceCubes" column="cubes" javaType="java.lang.Double" jdbcType="FLOAT"/>
+        <result property="planCubes" column="plancubes" javaType="java.lang.Double" jdbcType="FLOAT"/>
+        <result property="planNum" column="tasknum" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <parameterMap type="java.util.Map" id="paramMap">
+        <!--<parameter property="result" mode="OUT" javaType="java.sql.ResultSet" jdbcType="OTHER"/>-->
+        <parameter property="para1" mode="IN" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </parameterMap>
+    <select id="statDispatchList" parameterMap="paramMap" resultMap="resultMap" statementType="CALLABLE">
+        {call sp_getProgressByType(#{para1})}
     </select>
 
 </mapper>

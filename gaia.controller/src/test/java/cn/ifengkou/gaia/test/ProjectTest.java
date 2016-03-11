@@ -1,12 +1,14 @@
 package cn.ifengkou.gaia.test;
 
 import cn.ifengkou.gaia.model.Project;
+import cn.ifengkou.gaia.service.DispatchListService;
 import cn.ifengkou.gaia.service.ProjectService;
 import com.github.pagehelper.PageHelper;
 import junit.framework.Assert;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,6 +17,8 @@ import java.util.List;
 public class ProjectTest extends SpringTest {
     @Resource
     ProjectService projectService;
+    @Resource
+    DispatchListService dispatchListService;
 
     @Test
     public void test_getList(){
@@ -27,4 +31,10 @@ public class ProjectTest extends SpringTest {
         Assert.assertEquals(1,projects.size());
     }
 
+    @Test
+    public void test_stat(){
+        HashMap<String,Object> map = dispatchListService.statDispatchList("y");
+
+        Assert.assertEquals(30.0,map.get("produceCubes"));
+    }
 }

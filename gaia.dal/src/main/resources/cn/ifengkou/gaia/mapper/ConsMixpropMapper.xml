@@ -52,7 +52,7 @@
         and m.siloId = s.siloId
         and s.stuffId = f.stuffId
         and m.ConsMixpropID = #{consMixpropID}
-       ORDER BY m.id desc
+       ORDER BY m.ConsMixpropItemsID
     </select>
 
     <update id="audit" parameterType="java.util.Map">

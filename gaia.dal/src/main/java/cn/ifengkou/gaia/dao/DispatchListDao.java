@@ -16,5 +16,5 @@ public interface DispatchListDao {
 
     List<DispatchList> getDispatchList(Date beginTime);
 
-    HashMap<String,Object> statDispatchList(Date beginTime);
+    HashMap<String,Object> statDispatchList(String type);
 }

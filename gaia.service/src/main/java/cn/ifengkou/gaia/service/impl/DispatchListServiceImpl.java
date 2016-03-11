@@ -25,7 +25,7 @@ public class DispatchListServiceImpl implements DispatchListService {
     }
 
     @Override
-    public HashMap<String, Object> statDispatchList(Date date) {
-        return dispatchListDao.statDispatchList(date);
+    public HashMap<String, Object> statDispatchList(String type) {
+        return dispatchListDao.statDispatchList(type);
     }
 }

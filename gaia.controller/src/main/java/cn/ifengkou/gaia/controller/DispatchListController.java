@@ -72,9 +72,9 @@ public class DispatchListController {
             return new JsonDto(false,"无权限");
         }
         HashMap<String,Object> returnMap = new HashMap<>();
-        returnMap.put("today",dispatchListService.statDispatchList(DateTools.getBeginOfCurrentDay()));
-        returnMap.put("month",dispatchListService.statDispatchList(DateTools.getFirstDayCurrentMonth()));
-        returnMap.put("year",dispatchListService.statDispatchList(DateTools.getFirstDayOfCurrentYear()));
+        returnMap.put("today",dispatchListService.statDispatchList("d"));
+        returnMap.put("month",dispatchListService.statDispatchList("m"));
+        returnMap.put("year",dispatchListService.statDispatchList("y"));
         return new JsonDto(true,returnMap);
     }
 

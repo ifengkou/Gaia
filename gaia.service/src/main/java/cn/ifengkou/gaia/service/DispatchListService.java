@@ -21,8 +21,8 @@ public interface DispatchListService {
 
     /**
      * 统计本年度/本月/本日 生产情况
-     * @param date
+     * @param type
      * @return
      */
-    HashMap<String,Object> statDispatchList(Date date);
+    HashMap<String,Object> statDispatchList(String type);
 }
