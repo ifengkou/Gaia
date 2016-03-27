@@ -8,6 +8,8 @@
                 select custName,projectName,conStrength,castMode,consPos,plancube
                 ,sum(producecubes) as produceCubes
                 ,max(producedate) as lastTime
+                ,SUM(CASE WHEN IsSigned IN(0) THEN ProduceCubes END) AS unsigncube
+				,COUNT(CASE IsSigned WHEN 0 THEN 0 END) AS unsigntimes
                 from shippingdocument
                 where custName = #{userName}
                 group by custName,projectName,conStrength,castMode,consPos,plancube
