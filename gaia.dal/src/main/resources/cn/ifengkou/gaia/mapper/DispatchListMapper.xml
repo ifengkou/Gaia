@@ -11,9 +11,8 @@
         where 1=1
             and d.TaskID = t.TaskID
             and d.ProductLineID = l.AutoID
-            AND d.IsCompleted = 1
+            AND d.IsCompleted = 0
             and d.IsRunning = 1
-            and d.buildtime>#{beginTime}
     </select>
 
     <!--<select id="statDispatchList" resultType="java.util.Map" parameterType="Object">

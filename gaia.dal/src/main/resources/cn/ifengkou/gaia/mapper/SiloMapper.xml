@@ -5,15 +5,16 @@
 <mapper namespace="cn.ifengkou.gaia.dao.SiloDao">
 
     <select id="querySilo" resultType="java.util.Map" parameterType="Object">
-        select s.siloId siloId,s.siloName,t.stuffName,s.content,s.maxContent,p.ProductLineID
-        from silo s,stuffinfo t,SiloProductLine p
+        select s.siloId siloId,s.siloName,t.stuffName,s.content,s.maxContent,p.ProductLineID,l.ProductLineName
+        from silo s,stuffinfo t,SiloProductLine p,productline l
         where 1=1
           and s.stuffId = t.stuffid
 		  and s.SiloId = p.SiloID
+		  and p.ProductLineID = l.ProductLineID
           and s.MinWarm > 0
           and s.MaxWarm > 0
           and s.ISUSED = 1
-        ORDER BY s.siloName
+        ORDER BY s.orderNum
     </select>
 
 </mapper>

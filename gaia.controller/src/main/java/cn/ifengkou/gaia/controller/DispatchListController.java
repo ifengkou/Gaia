@@ -38,8 +38,6 @@ public class DispatchListController {
         if(user == null){
             return new JsonDto(false,"无权限");
         }
-        //Date date = new Date(115,11,8);
-        //return new JsonDto(true,dispatchListService.getDispatchList(date));
         List<DispatchList> list = dispatchListService.getDispatchList(DateTools.getBeginOfCurrentDay());
         List<DispatchGroup> returnList = new ArrayList<>();
 
