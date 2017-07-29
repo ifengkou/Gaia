@@ -3,7 +3,10 @@ package cn.ifengkou.gaia.dao;
 import cn.ifengkou.gaia.model.CustomerPlan;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Sloong on 2015/12/17.
@@ -20,4 +23,10 @@ public interface CustomerPlanDao {
     int delete(String id);
 
     CustomerPlan get(String id);
+
+    //以下为站内功能
+
+    HashMap<String,Double> getPlansGroupInfo(Map map);
+
+    List<CustomerPlan> getAllAuditedPlans(Map map);
 }

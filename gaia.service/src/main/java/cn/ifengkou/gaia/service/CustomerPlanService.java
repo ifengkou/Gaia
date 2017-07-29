@@ -2,6 +2,7 @@ package cn.ifengkou.gaia.service;
 
 import cn.ifengkou.gaia.model.CustomerPlan;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,4 +20,26 @@ public interface CustomerPlanService {
     int delete(String id);
 
     CustomerPlan get(String id);
+
+    /**
+     * 查询 今日 计划总数，计划总方量
+     * @return
+     */
+    HashMap<String,Double> getTodayPlansGroupInfo();
+
+    /**
+     * 查询 今日 已审核计划信息列表
+     * @return
+     */
+    List<CustomerPlan> getTodayAllAuditedPlans();
+
+
+
+    HashMap<String, Double> getTomorrowPlansGroupInfo();
+
+    List<CustomerPlan> getTomorrowAllAuditedPlans();
+
+    HashMap<String, Double> getPlansGroupInfo(String beginTime,String endTime);
+
+    List<CustomerPlan> getAllAuditedPlans(String beginTime,String endTime);
 }

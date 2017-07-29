@@ -107,4 +107,11 @@ public class PlanTest extends SpringTest {
 
         Assert.assertEquals(4000.00, bean3.getPlanCube());
     }
+
+    @Test
+    public void test_today(){
+        List<CustomerPlan> todayList = customerPlanService.getTodayAllAuditedPlans();
+
+        Assert.assertEquals(3,todayList);
+    }
 }

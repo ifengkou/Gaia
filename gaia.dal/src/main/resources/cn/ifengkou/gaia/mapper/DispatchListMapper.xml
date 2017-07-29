@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ifengkou.gaia.dao.DispatchListDao">
+    <select id="getDispatchList" resultType="cn.ifengkou.gaia.model.DispatchList" parameterType="Object">
+        select d.DispatchID id,d.taskId,d.productLineId
+           ,l.productLineName
+           ,t.projectName,t.constructUnit,t.conStrength,t.castMode,t.consPos,t.slump
+        from DispatchList d ,ProduceTasks t ,ProductLine l
+        where 1=1
+            and d.TaskID = t.TaskID
+            and d.ProductLineID = l.AutoID
+            AND d.IsCompleted = 0
+            and d.IsRunning = 1
+    </select>
+
+    <!--<select id="statDispatchList" resultType="java.util.Map" parameterType="Object">
+        select count(d.TaskID) planNum,SUM(t.plancube) planCubes,SUM(d.sendcube) produceCubes
+        from Shippingdocument d,ProduceTasks t
+        where 1=1
+            and d.TaskID = t.TaskID
+            and d.produceDate >#{beginTime}
+    </select>-->
+
+    <resultMap type="java.util.Map" id="resultMap">
+        <result property="produceCubes" column="cubes" javaType="java.lang.Double" jdbcType="FLOAT"/>
+        <result property="planCubes" column="plancubes" javaType="java.lang.Double" jdbcType="FLOAT"/>
+        <result property="planNum" column="tasknum" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <parameterMap type="java.util.Map" id="paramMap">
+        <!--<parameter property="result" mode="OUT" javaType="java.sql.ResultSet" jdbcType="OTHER"/>-->
+        <parameter property="para1" mode="IN" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </parameterMap>
+    <select id="statDispatchList" parameterMap="paramMap" resultMap="resultMap" statementType="CALLABLE">
+        {call sp_getProgressByType(#{para1})}
+    </select>
+
+</mapper>

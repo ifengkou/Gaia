@@ -5,7 +5,7 @@
 <mapper namespace="cn.ifengkou.gaia.dao.CustomerDao">
 
         <select id="get" resultType="java.util.Map" parameterType="Object">
-                select *
+                select CustomerID as id ,CustName as username,CustType usertype,password
                 from Customer
                 where CustomerID = #{id} and Lifecycle >-1
         </select>
@@ -22,7 +22,7 @@
         </select>
 
         <update id="genToken" parameterType="java.util.Map">
-                UPDATE Customer set Token =#{token} where CustomerID =#{name}
+                UPDATE Customer set Token =#{token} where CustomerID =#{id}
         </update>
 
         <update id="changePwd" parameterType="java.util.Map">

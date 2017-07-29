@@ -40,8 +40,8 @@ public class CustomerController {
                 String token = (String) user.get("token");
                 if (StringUtils.isEmpty(token)) {
                     token = UUIDTools.uuid();
-
-                    customerService.genToken(name, token);
+                    String customerId = (String) user.get("id");
+                    customerService.genToken(customerId, token);
 
                     user.put("token", token);
                 }
@@ -70,7 +70,7 @@ public class CustomerController {
         String customerId = (String) user.get("id");
         HashMap<String,Object> map = customerService.get(customerId);
         //比较密码
-        String password = (String) map.get("Password");
+        String password = (String) map.get("password");
         int x;
         if (StringUtils.notEmpty(password) && password.equals(model.getOldPasswordCiphertext())) {
             x = customerService.changePwd(customerId,model.getNewPasswordCiphertext());

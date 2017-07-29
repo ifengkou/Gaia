@@ -17,7 +17,7 @@
         </select>
 
         <select id="getByAccessToken" resultType="java.util.Map" parameterType="String">
-                select UserID as id,loginname ,TrueName as username,usertype
+                select UserID as id,UserId as loginname ,TrueName as username,usertype
                 from USERS
                 where Token = #{accesstoken} and Lifecycle >-1
         </select>

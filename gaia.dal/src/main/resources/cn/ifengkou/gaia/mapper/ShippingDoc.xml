@@ -8,6 +8,8 @@
                 select custName,projectName,conStrength,castMode,consPos,plancube
                 ,sum(producecubes) as produceCubes
                 ,max(producedate) as lastTime
+                ,SUM(CASE WHEN IsSigned IN(0) THEN ProduceCubes END) AS unsigncube
+				,COUNT(CASE IsSigned WHEN 0 THEN 0 END) AS unsigntimes
                 from shippingdocument
                 where custName = #{userName}
                 group by custName,projectName,conStrength,castMode,consPos,plancube
@@ -15,7 +17,7 @@
     </select>
 
     <select id="get" resultType="cn.ifengkou.gaia.model.Shipping" parameterType="Object">
-        select shipDocID as id,custName,projectName,conStrength,shippingCube,providedTimes,providedCube,isSigned,signInCube
+        select shipDocID as id,custName,projectName,conStrength,shippingCube,providedTimes,providedCube,isSigned,signInCube,consPos,castMode,realSlump
         from shippingdocument
         where shipDocID =#{id} and custName =#{userName}
     </select>
@@ -28,4 +30,24 @@
          where shipDocID =#{id}
     </update>
 
+    <!--站内功能-->
+    <select id="getShippingDocByTime" resultType="java.util.Map" parameterType="Object">
+        select projectName,conStrength
+        ,sum(SendCube) as sendCubes
+        ,sum(ParCube) as parCubes
+        from shippingdocument
+        where 1=1
+        and ProduceDate > #{beginTime}
+        <![CDATA[ and produceDate <= #{endTime} ]]>
+        group by projectName,conStrength
+        order by projectName
+    </select>
+    <select id="statShippingCubes" resultType="java.util.Map" parameterType="Object">
+        select sum(SendCube) as sendCubes
+        ,sum(ParCube) as parCubes
+        from shippingdocument
+        where 1=1
+        and ProduceDate > #{beginTime}
+        <![CDATA[ and produceDate <= #{endTime} ]]>
+    </select>
 </mapper>

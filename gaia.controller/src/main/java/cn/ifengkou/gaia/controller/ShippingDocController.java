@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -67,8 +68,52 @@ public class ShippingDocController {
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
         Shipping bean = shippingDocService.get(id,(String) user.get("username"));
         if(bean == null){
-            throw new ResourceIsNotExistException();
+            return new JsonDto(false,"当前用户下，未找到单号为【"+id+"】的发货单");
         }
         return new JsonDto(true,"查询单号'"+id+"'成功",bean);
+    }
+
+    //站内功能
+
+    /**
+     * 出票方量、调度方量统计
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @RequestMapping(method= RequestMethod.GET,value = "/stat")
+    @ResponseBody
+    public JsonDto statShippingCubes(long beginTime,long endTime,HttpServletRequest request) {
+        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
+        if(user == null){
+            return new JsonDto(false,"无权限");
+        }
+        if(beginTime-endTime>0){
+            return new JsonDto(false,"开始时间不得大于结束时间");
+        }
+        Date bTime = new Date(beginTime);
+        Date eTime = new Date(endTime);
+        return new JsonDto(true,shippingDocService.statShippingCubes(bTime,eTime));
+    }
+
+    /**
+     * 生产方量统计，按工地和砼强度分组
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @RequestMapping(method= RequestMethod.GET,value = "/list")
+    @ResponseBody
+    public JsonDto getShippingDocByTime(long beginTime,long endTime,HttpServletRequest request) {
+        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
+        if(user == null){
+            return new JsonDto(false,"无权限");
+        }
+        if(beginTime-endTime>0){
+            return new JsonDto(false,"开始时间不得大于结束时间");
+        }
+        Date bTime = new Date(beginTime);
+        Date eTime = new Date(endTime);
+        return new JsonDto(true,shippingDocService.getShippingDocByTime(bTime,eTime));
     }
 }
