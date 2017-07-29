@@ -34,65 +34,65 @@ public class CustomerPlanController {
     @Resource
     CustomerPlanService customerPlanService;
 
-    @RequestMapping(method= RequestMethod.GET,value = "/audited")
+    @RequestMapping(method = RequestMethod.GET, value = "/audited")
     @ResponseBody
-    public JsonDto getAuditedList(@RequestParam(value = "page",defaultValue = "1")int page,HttpServletRequest request) {
+    public JsonDto getAuditedList(@RequestParam(value = "page", defaultValue = "1") int page, HttpServletRequest request) {
         //id,username,usertype
-        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.USER_KEY);
         String customerId = (String) user.get("id");
         PageHelper.startPage(page, _Sys.PAGE_SIZE);
         List<CustomerPlan> auditedList = customerPlanService.getAuditedPlansByCustomerID(customerId);
-        return new JsonDto(true,auditedList);
+        return new JsonDto(true, auditedList);
     }
 
-    @RequestMapping(method= RequestMethod.GET,value = "/auditing")
+    @RequestMapping(method = RequestMethod.GET, value = "/auditing")
     @ResponseBody
-    public JsonDto getAuditingList(@RequestParam(value = "page",defaultValue = "1")int page,HttpServletRequest request) {
-        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
+    public JsonDto getAuditingList(@RequestParam(value = "page", defaultValue = "1") int page, HttpServletRequest request) {
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.USER_KEY);
         String customerId = (String) user.get("id");
         PageHelper.startPage(page, _Sys.PAGE_SIZE);
         List<CustomerPlan> auditingList = customerPlanService.getAuditingPlansByCustomerID(customerId);
-        return new JsonDto(true,auditingList);
+        return new JsonDto(true, auditingList);
     }
 
-    @RequestMapping(method= RequestMethod.POST,consumes = "application/json")
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public JsonDto add(@RequestBody CustomerPlan plan,HttpServletRequest request){
+    public JsonDto add(@RequestBody CustomerPlan plan, HttpServletRequest request) {
 
-        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
-        String userId = (String)user.get("id");
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.USER_KEY);
+        String userId = (String) user.get("id");
         String id = IdGen.genId();
         plan.setCustomerPlanID(id);
         plan.setBuilder(userId);
         plan.setBuildTime(new Date());
 
-        int x1=customerPlanService.add(plan);
+        int x1 = customerPlanService.add(plan);
 
-        if(x1 != 1) {
-            return new JsonDto(false,"新增工地计划异常");
-        }else{
-            HashMap<String,String> map = new HashMap<>();
-            map.put("customerPlanID",id);
-            return new JsonDto(true,map);
+        if (x1 != 1) {
+            return new JsonDto(false, "新增工地计划异常");
+        } else {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("customerPlanID", id);
+            return new JsonDto(true, map);
         }
 
     }
 
-    @RequestMapping(method= RequestMethod.PUT,value = "/{id}",consumes = "application/json")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}", consumes = "application/json")
     @ResponseBody
-    public JsonDto update(@PathVariable("id")String id,@RequestBody CustomerPlan plan,HttpServletRequest request) throws ResourceIsNotExistException {
+    public JsonDto update(@PathVariable("id") String id, @RequestBody CustomerPlan plan, HttpServletRequest request) throws ResourceIsNotExistException {
         CustomerPlan bean = customerPlanService.get(id);
-        if(bean == null){
+        if (bean == null) {
             throw new ResourceIsNotExistException();
         }
-        if(bean.isAuditStatus()){
-            return new JsonDto(false,"该计划已审核，无法修改，请联系站内人员");
+        if (bean.isAuditStatus()) {
+            return new JsonDto(false, "该计划已审核，无法修改，请联系站内人员");
         }
-        if(StringUtils.notEmpty(plan.getContractID())) {
+        if (StringUtils.notEmpty(plan.getContractID())) {
             bean.setContractID(plan.getContractID());
         }
-        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
-        String userId = (String)user.get("id");
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.USER_KEY);
+        String userId = (String) user.get("id");
         bean.setModifier(userId);
 
         MyBeanUtils.copyProperties(plan, bean);
@@ -120,51 +120,130 @@ public class CustomerPlanController {
         }*/
 
         customerPlanService.update(bean);
-        return new JsonDto(true,"修改成功",bean.getCustomerPlanID());
+        return new JsonDto(true, "修改成功", bean.getCustomerPlanID());
     }
 
-    @RequestMapping(method= RequestMethod.DELETE,value = "/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @ResponseBody
-    public JsonDto delete(@PathVariable("id")String id,HttpServletRequest request) throws ResourceIsNotExistException {
+    public JsonDto delete(@PathVariable("id") String id, HttpServletRequest request) throws ResourceIsNotExistException {
         CustomerPlan bean = customerPlanService.get(id);
-        if(bean == null){
+        if (bean == null) {
             throw new ResourceIsNotExistException();
         }
-        if(bean.isAuditStatus()){
-            return new JsonDto(false,"该计划已审核，无法删除，请联系站内人员");
+        if (bean.isAuditStatus()) {
+            return new JsonDto(false, "该计划已审核，无法删除，请联系站内人员");
         }
         customerPlanService.delete(id);
-        return new JsonDto(true,"删除成功",bean.getCustomerPlanID());
+        return new JsonDto(true, "删除成功", bean.getCustomerPlanID());
     }
 
     //站内功能
+
     /**
      * 今日工地计划列表
+     *
      * @return
      */
-    @RequestMapping(method= RequestMethod.GET,value = "/today")
+    @RequestMapping(method = RequestMethod.GET, value = "/today")
     @ResponseBody
-    public JsonDto auditedPlansOfToday(HttpServletRequest request){
-        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
-        if(user == null){
-            return new JsonDto(false,"无权限");
+    public JsonDto auditedPlansOfToday(HttpServletRequest request) {
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
+        if (user == null) {
+            return new JsonDto(false, "无权限");
         }
         List<CustomerPlan> todayList = customerPlanService.getTodayAllAuditedPlans();
-        return new JsonDto(true,todayList);
+        return new JsonDto(true, todayList);
     }
 
     /**
      * 工地总计划数，总方量数
+     *
      * @return
      */
-    @RequestMapping(method= RequestMethod.GET,value = "/total")
+    @RequestMapping(method = RequestMethod.GET, value = "/total")
     @ResponseBody
-    public JsonDto statPlansOfToday(HttpServletRequest request){
-        HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
-        if(user == null){
-            return new JsonDto(false,"无权限");
+    public JsonDto statPlansOfToday(HttpServletRequest request) {
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
+        if (user == null) {
+            return new JsonDto(false, "无权限");
         }
-        HashMap<String,Double> todayInfo = customerPlanService.getTodayPlansGroupInfo();
-        return new JsonDto(true,todayInfo);
+        HashMap<String, Double> todayInfo = customerPlanService.getTodayPlansGroupInfo();
+        return new JsonDto(true, todayInfo);
     }
+
+    /**
+     * 获取明日计划
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/tomorrow")
+    @ResponseBody
+    public JsonDto auditedPlansOfTomorrow(HttpServletRequest request) {
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
+        if (user == null) {
+            return new JsonDto(false, "无权限");
+        }
+        List<CustomerPlan> todayList = customerPlanService.getTomorrowAllAuditedPlans();
+        return new JsonDto(true, todayList);
+    }
+
+    /**
+     * 工地总计划数，总方量数
+     *
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/tomorrow/total")
+    @ResponseBody
+    public JsonDto statPlansOfTomorrow(HttpServletRequest request) {
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
+        if (user == null) {
+            return new JsonDto(false, "无权限");
+        }
+        HashMap<String, Double> todayInfo = customerPlanService.getTomorrowPlansGroupInfo();
+        return new JsonDto(true, todayInfo);
+    }
+
+    /**
+     * 根据时间获取 统计方量
+     * @param request
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/stat")
+    @ResponseBody
+    public JsonDto statPlans(HttpServletRequest request
+            , @RequestParam("beginTime") String beginTime
+            , @RequestParam("endTime") String endTime) {
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
+        if (user == null) {
+            return new JsonDto(false, "无权限");
+        }
+        HashMap<String, Double> statInfo = customerPlanService.getPlansGroupInfo(beginTime, endTime);
+        return new JsonDto(true, statInfo);
+    }
+
+
+    /**
+     * 根据时间获取 生产计划
+     * @param request
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/list")
+    @ResponseBody
+    public JsonDto auditedPlans(HttpServletRequest request
+            , @RequestParam("beginTime") String beginTime
+            , @RequestParam("endTime") String endTime) {
+        HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
+        if (user == null) {
+            return new JsonDto(false, "无权限");
+        }
+        List<CustomerPlan> list = customerPlanService.getAllAuditedPlans(beginTime, endTime);
+        return new JsonDto(true, list);
+    }
+
+
 }

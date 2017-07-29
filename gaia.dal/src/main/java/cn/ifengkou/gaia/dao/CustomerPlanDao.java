@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Sloong on 2015/12/17.
@@ -25,7 +26,7 @@ public interface CustomerPlanDao {
 
     //以下为站内功能
 
-    HashMap<String,Double> getPlansGroupInfo(Date beginTime);
+    HashMap<String,Double> getPlansGroupInfo(Map map);
 
-    List<CustomerPlan> getAllAuditedPlans(Date beginTime);
+    List<CustomerPlan> getAllAuditedPlans(Map map);
 }

@@ -52,15 +52,17 @@
         </delete>
 
         <!-- 以下为站内 sql 查询 -->
-        <select id="getPlansGroupInfo" resultType="java.util.Map" parameterType="Object">
+        <select id="getPlansGroupInfo" resultType="java.util.Map" parameterType="Map">
                 select SUM(PlanCube) totalCube,COUNT(CustomerPlanID) planNumb
                 FROM CustomerPlan
-                WHERE AuditStatus=1 and planDate > #{beginTime}
+                WHERE AuditStatus=1 and planDate >= #{beginTime}
+                <![CDATA[ and planDate < #{endTime} ]]>
         </select>
 
-        <select id="getAllAuditedPlans" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Object">
+        <select id="getAllAuditedPlans" resultType="cn.ifengkou.gaia.model.CustomerPlan" parameterType="Map">
                 select projectName,constructUnit,conStrength,castMode,consPos,needDate,planDate,planCube,auditStatus,customerPlanID,contractID,builder,buildTime,auditTime
                 from CustomerPlan
-                where AuditStatus=1 and planDate > #{beginTime}
+                where AuditStatus=1 and planDate >= #{beginTime}
+                <![CDATA[ and planDate < #{endTime} ]]>
         </select>
 </mapper>

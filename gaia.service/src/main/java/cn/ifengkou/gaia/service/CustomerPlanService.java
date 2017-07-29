@@ -32,4 +32,14 @@ public interface CustomerPlanService {
      * @return
      */
     List<CustomerPlan> getTodayAllAuditedPlans();
+
+
+
+    HashMap<String, Double> getTomorrowPlansGroupInfo();
+
+    List<CustomerPlan> getTomorrowAllAuditedPlans();
+
+    HashMap<String, Double> getPlansGroupInfo(String beginTime,String endTime);
+
+    List<CustomerPlan> getAllAuditedPlans(String beginTime,String endTime);
 }

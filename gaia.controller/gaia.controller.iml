@@ -54,6 +54,7 @@
     <orderEntry type="module" module-name="gaia.dal" />
     <orderEntry type="module" module-name="gaia.service" />
     <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache:2.10.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" name="Maven: cglib:cglib:2.2" level="project" />

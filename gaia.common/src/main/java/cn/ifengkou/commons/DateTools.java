@@ -38,4 +38,5 @@ public class DateTools {
         long zero=current/(1000*3600*24)*(1000*3600*24)- TimeZone.getDefault().getRawOffset();//今天零点零分零秒的毫秒数
         return new Date(zero);
     }
+
 }
