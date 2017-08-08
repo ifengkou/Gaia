@@ -1,4 +1,48 @@
-.idea/
+config.js
+.cov
+coverage
+node_modules
+bower_components
+npm-debug.log
+.naeindex
+coverage.html
+.monitor
+
+# Ignore Mac OS desktop services store
+.DS_Store
+
+# Ignore Windows desktop setting file
+desktop.ini
+
+# Ignore project outputs
+
+dist/
+*.min.*.js
+*.min.*.css
+assets.json
+
+*.log
+*.csv
+*.dat
+*.out
+
 target/
+log/
+logs/
+
+# IDE
+
+.idea/
+public/upload/*
 *.iml
+
+.classpath
+.project
+.settings/
+build/
+
+*.sublime-project
+*.sublime-workspace
+*.swp
+
 sqlserver.properties

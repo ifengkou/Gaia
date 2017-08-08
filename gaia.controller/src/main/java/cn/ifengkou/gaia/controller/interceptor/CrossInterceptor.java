@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by Sloong on 2015/12/21.
  */
+@Deprecated
 public class CrossInterceptor extends HandlerInterceptorAdapter {
 
     @Override

@@ -12,6 +12,8 @@ import cn.ifengkou.gaia.service.ContractService;
 import cn.ifengkou.gaia.service.CustomerPlanService;
 import cn.ifengkou.gaia.service.ProjectService;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,9 +37,13 @@ public class ProjectController {
     @Resource
     CustomerPlanService customerPlanService;
 
+    private final static Logger LOG = LoggerFactory.getLogger(ProjectController.class);
+
+
     @RequestMapping(method= RequestMethod.GET)
     @ResponseBody
     public JsonDto getList(@RequestParam(value = "page",defaultValue = "1")int page,HttpServletRequest request) {
+        LOG.info("获取工地计划");
         //id,username,usertype
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.USER_KEY);
         PageHelper.startPage(page, _Sys.PAGE_SIZE);
@@ -48,6 +54,7 @@ public class ProjectController {
     @RequestMapping(method= RequestMethod.POST,consumes = "application/json")
     @ResponseBody
     public JsonDto add(@RequestBody Project project,HttpServletRequest request){
+        LOG.info("增加工程");
         if(StringUtils.isEmpty(project.getContractName())||StringUtils.isEmpty(project.getProjectName())){
             return new JsonDto(false,"合同名称和工程名称不可为空");
         }
@@ -87,6 +94,7 @@ public class ProjectController {
     @RequestMapping(method= RequestMethod.PUT,value = "/{id}",consumes = "application/json")
     @ResponseBody
     public JsonDto update(@PathVariable("id")String id,@RequestBody Project project,HttpServletRequest request) throws ResourceIsNotExistException {
+        LOG.info("更新工程");
         Project bean = projectService.get(id);
         if(bean == null){
             throw new ResourceIsNotExistException();
@@ -107,6 +115,7 @@ public class ProjectController {
     @RequestMapping(method= RequestMethod.DELETE,value = "/{id}")
     @ResponseBody
     public JsonDto delete(@PathVariable("id")String id,HttpServletRequest request) throws ResourceIsNotExistException {
+        LOG.info("删除工程");
         Project bean = projectService.get(id);
         if(bean == null){
             throw new ResourceIsNotExistException();

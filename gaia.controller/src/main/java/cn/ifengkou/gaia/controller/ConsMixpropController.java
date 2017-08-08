@@ -2,7 +2,10 @@ package cn.ifengkou.gaia.controller;
 
 import cn.ifengkou.gaia.common.JsonDto;
 import cn.ifengkou.gaia.common._Sys;
+import cn.ifengkou.gaia.controller.filter.CORSFilter;
 import cn.ifengkou.gaia.service.ConsMixpropService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,6 +19,8 @@ import java.util.HashMap;
 @RequestMapping("api/consMixprop")
 public class ConsMixpropController {
 
+    private final static Logger LOG = LoggerFactory.getLogger(ConsMixpropController.class);
+
     @Resource
     ConsMixpropService consMixpropService;
 
@@ -27,6 +32,7 @@ public class ConsMixpropController {
     @RequestMapping(method = RequestMethod.GET,value = "/list")
     @ResponseBody
     public JsonDto getTodayDispatchList(@RequestParam(value = "productLineId",defaultValue = "")String productLineId,HttpServletRequest request){
+        LOG.info("根据生产线id获取未被审核的施工配比单");
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
         if(user == null){
             return new JsonDto(false,"无权限");
@@ -41,6 +47,7 @@ public class ConsMixpropController {
     @RequestMapping(method = RequestMethod.GET,value = "/{id}/stuffs")
     @ResponseBody
     public JsonDto getConsMixpropItem(@PathVariable("id")String id,HttpServletRequest request){
+        LOG.info("根据施工配比ID，获得配比详细材料用量");
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
         if(user == null){
             return new JsonDto(false,"无权限");
@@ -56,6 +63,7 @@ public class ConsMixpropController {
     @RequestMapping(method = RequestMethod.PUT,value = "/{id}/audit")
     @ResponseBody
     public JsonDto auditConsMixprop(@PathVariable("id")String id,HttpServletRequest request){
+        LOG.info("审核施工配比");
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
         if(user == null){
             return new JsonDto(false,"无权限");

@@ -7,6 +7,8 @@ import cn.ifengkou.gaia.common._Sys;
 import cn.ifengkou.gaia.model.ChangePwdModel;
 import cn.ifengkou.gaia.model.LoginData;
 import cn.ifengkou.gaia.service.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,14 +22,17 @@ import java.util.HashMap;
 @RequestMapping("api/customer")
 public class CustomerController {
 
+    private final static Logger LOG = LoggerFactory.getLogger(CustomerController.class);
     @Resource
     CustomerService customerService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public JsonDto userLogin(@RequestBody LoginData data) {
+
         String name = data.getName();
         String pass = data.getPass();
+        LOG.info("登录，{}", name);
         HashMap<String, Object> user = customerService.getByName(name);
         if (user != null) {
             String password = (String) user.get("password");
@@ -65,22 +70,24 @@ public class CustomerController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/password")
     @ResponseBody
-    public JsonDto changePassword(@RequestBody ChangePwdModel model,HttpServletRequest request) {
+    public JsonDto changePassword(@RequestBody ChangePwdModel model, HttpServletRequest request) {
+
         HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.USER_KEY);
         String customerId = (String) user.get("id");
-        HashMap<String,Object> map = customerService.get(customerId);
+        LOG.info("修改密码，customid={}", customerId);
+        HashMap<String, Object> map = customerService.get(customerId);
         //比较密码
         String password = (String) map.get("password");
         int x;
         if (StringUtils.notEmpty(password) && password.equals(model.getOldPasswordCiphertext())) {
-            x = customerService.changePwd(customerId,model.getNewPasswordCiphertext());
-        }else{
-            return new JsonDto(false,"原密码错误，修改失败");
+            x = customerService.changePwd(customerId, model.getNewPasswordCiphertext());
+        } else {
+            return new JsonDto(false, "原密码错误，修改失败");
         }
-        if(x>0){
+        if (x > 0) {
             return new JsonDto(true, "密码修改成功", customerId);
         }
-        return new JsonDto(false,"密码修改失败");
+        return new JsonDto(false, "密码修改失败");
     }
 
 

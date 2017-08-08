@@ -160,8 +160,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.penggle</groupId>
-            <artifactId>kaptcha</artifactId>
+            <groupId>org.ebaysf.web</groupId>
+            <artifactId>cors-filter</artifactId>
         </dependency>
     </dependencies>
 

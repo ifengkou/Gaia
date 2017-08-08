@@ -32,31 +32,33 @@ public class AccessTokenVerifyInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        String x = "AccessTokenVerifyInterceptor executing......我是中文.";
-        //System.out.println(x);
-        LOG.info(x);
+        LOG.debug("AccessTokenVerifyInterceptor executing.......");
+
         boolean flag = false;
         String accessToken = request.getParameter("accesstoken");
-        if(StringUtils.notEmpty(accessToken)) {
+        if (StringUtils.notEmpty(accessToken)) {
             //验证accessToken
             //verifyAccessToken 已做缓存处理
-            HashMap<String,Object> customer = customerService.verifyAccessToken(accessToken);
-            if(customer!=null){
+            HashMap<String, Object> customer = customerService.verifyAccessToken(accessToken);
+            if (customer != null) {
                 flag = true;
-                request.setAttribute(_Sys.USER_KEY,customer);
-            }else{
-                HashMap<String,Object> user = userService.verifyAccessToken(accessToken);
-                if(user!=null){
+                request.setAttribute(_Sys.USER_KEY, customer);
+            } else {
+                HashMap<String, Object> user = userService.verifyAccessToken(accessToken);
+                if (user != null) {
                     flag = true;
-                    request.setAttribute(_Sys.ADMIN_KEY,user);
+                    request.setAttribute(_Sys.ADMIN_KEY, user);
                 }
             }
         }
 
-        if(!flag){
+        if (!flag) {
+            LOG.info("wrong access token:{}", accessToken);
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.getWriter().print("wrong access token");
         }
+        LOG.debug("access token ok");
+
         return flag;
     }
 }

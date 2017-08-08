@@ -11,6 +11,8 @@ import cn.ifengkou.gaia.service.ContractService;
 import cn.ifengkou.gaia.service.CustomerPlanService;
 import cn.ifengkou.gaia.service.ProjectService;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -34,9 +36,12 @@ public class CustomerPlanController {
     @Resource
     CustomerPlanService customerPlanService;
 
+    private final static Logger LOG = LoggerFactory.getLogger(CustomerPlanController.class);
+
     @RequestMapping(method = RequestMethod.GET, value = "/audited")
     @ResponseBody
     public JsonDto getAuditedList(@RequestParam(value = "page", defaultValue = "1") int page, HttpServletRequest request) {
+        LOG.info("获取已审核生产计划");
         //id,username,usertype
         HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.USER_KEY);
         String customerId = (String) user.get("id");
@@ -48,6 +53,7 @@ public class CustomerPlanController {
     @RequestMapping(method = RequestMethod.GET, value = "/auditing")
     @ResponseBody
     public JsonDto getAuditingList(@RequestParam(value = "page", defaultValue = "1") int page, HttpServletRequest request) {
+        LOG.info("获取审核中生产计划");
         HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.USER_KEY);
         String customerId = (String) user.get("id");
         PageHelper.startPage(page, _Sys.PAGE_SIZE);
@@ -58,7 +64,7 @@ public class CustomerPlanController {
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public JsonDto add(@RequestBody CustomerPlan plan, HttpServletRequest request) {
-
+        LOG.info("增加工地计划");
         HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.USER_KEY);
         String userId = (String) user.get("id");
         String id = IdGen.genId();
@@ -81,6 +87,7 @@ public class CustomerPlanController {
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}", consumes = "application/json")
     @ResponseBody
     public JsonDto update(@PathVariable("id") String id, @RequestBody CustomerPlan plan, HttpServletRequest request) throws ResourceIsNotExistException {
+        LOG.info("修改工地计划");
         CustomerPlan bean = customerPlanService.get(id);
         if (bean == null) {
             throw new ResourceIsNotExistException();
@@ -126,6 +133,7 @@ public class CustomerPlanController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @ResponseBody
     public JsonDto delete(@PathVariable("id") String id, HttpServletRequest request) throws ResourceIsNotExistException {
+        LOG.info("删除工地计划");
         CustomerPlan bean = customerPlanService.get(id);
         if (bean == null) {
             throw new ResourceIsNotExistException();
@@ -147,6 +155,7 @@ public class CustomerPlanController {
     @RequestMapping(method = RequestMethod.GET, value = "/today")
     @ResponseBody
     public JsonDto auditedPlansOfToday(HttpServletRequest request) {
+        LOG.info("获取今日工地计划列表");
         HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
         if (user == null) {
             return new JsonDto(false, "无权限");
@@ -163,6 +172,7 @@ public class CustomerPlanController {
     @RequestMapping(method = RequestMethod.GET, value = "/total")
     @ResponseBody
     public JsonDto statPlansOfToday(HttpServletRequest request) {
+        LOG.info("工地总计划数，总方量数");
         HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
         if (user == null) {
             return new JsonDto(false, "无权限");
@@ -180,6 +190,7 @@ public class CustomerPlanController {
     @RequestMapping(method = RequestMethod.GET, value = "/tomorrow")
     @ResponseBody
     public JsonDto auditedPlansOfTomorrow(HttpServletRequest request) {
+        LOG.info("获取明日计划");
         HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
         if (user == null) {
             return new JsonDto(false, "无权限");
@@ -196,6 +207,7 @@ public class CustomerPlanController {
     @RequestMapping(method = RequestMethod.GET, value = "/tomorrow/total")
     @ResponseBody
     public JsonDto statPlansOfTomorrow(HttpServletRequest request) {
+        LOG.info("明日工地总计划数，总方量数");
         HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
         if (user == null) {
             return new JsonDto(false, "无权限");
@@ -206,6 +218,7 @@ public class CustomerPlanController {
 
     /**
      * 根据时间获取 统计方量
+     *
      * @param request
      * @param beginTime
      * @param endTime
@@ -216,6 +229,7 @@ public class CustomerPlanController {
     public JsonDto statPlans(HttpServletRequest request
             , @RequestParam("beginTime") String beginTime
             , @RequestParam("endTime") String endTime) {
+        LOG.info("统计工地总计划数，总方量数；开始{}-{}", beginTime, endTime);
         HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
         if (user == null) {
             return new JsonDto(false, "无权限");
@@ -227,6 +241,7 @@ public class CustomerPlanController {
 
     /**
      * 根据时间获取 生产计划
+     *
      * @param request
      * @param beginTime
      * @param endTime
@@ -237,6 +252,7 @@ public class CustomerPlanController {
     public JsonDto auditedPlans(HttpServletRequest request
             , @RequestParam("beginTime") String beginTime
             , @RequestParam("endTime") String endTime) {
+        LOG.info("获取工地计划；开始{}-{}", beginTime, endTime);
         HashMap<String, Object> user = (HashMap<String, Object>) request.getAttribute(_Sys.ADMIN_KEY);
         if (user == null) {
             return new JsonDto(false, "无权限");

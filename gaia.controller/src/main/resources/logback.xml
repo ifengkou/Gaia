@@ -11,5 +11,10 @@
 		<appender-ref ref="CONSOLE"  level="INFO"/>
 	</root>
 	<!-- show sql -->
-	<logger name="cn.ifengkou.gaia.dao" level="DEBUG" />
+	<logger name="cn.ifengkou.gaia.dao" level="INFO" />
+
+	<!-- Spring framework logger -->
+	<logger name="org.springframework" level="error"></logger>
+	<logger name="org.mybatis" level="error"></logger>
+	<logger name="net.sf.ehcache" level="error"></logger>
 </configuration>

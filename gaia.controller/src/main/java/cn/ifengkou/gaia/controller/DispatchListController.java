@@ -6,6 +6,8 @@ import cn.ifengkou.gaia.common._Sys;
 import cn.ifengkou.gaia.model.DispatchGroup;
 import cn.ifengkou.gaia.model.DispatchList;
 import cn.ifengkou.gaia.service.DispatchListService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +29,8 @@ public class DispatchListController {
     @Resource
     DispatchListService dispatchListService;
 
+    private final static Logger LOG = LoggerFactory.getLogger(DispatchListController.class);
+
     /**
      * 今日生产情况
      * @return
@@ -34,6 +38,7 @@ public class DispatchListController {
     @RequestMapping(method = RequestMethod.GET,value = "/list")
     @ResponseBody
     public JsonDto getTodayDispatchList(HttpServletRequest request){
+        LOG.info("今日生产情况");
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
         if(user == null){
             return new JsonDto(false,"无权限");
@@ -65,6 +70,7 @@ public class DispatchListController {
     @RequestMapping(method = RequestMethod.GET,value = "/stat")
     @ResponseBody
     public JsonDto statDispatchList(HttpServletRequest request){
+        LOG.info("今日生产情况统计");
         HashMap<String,Object> user = (HashMap<String,Object>)request.getAttribute(_Sys.ADMIN_KEY);
         if(user == null){
             return new JsonDto(false,"无权限");
